@@ -1,4 +1,5 @@
 <template>
+  <notifications position="top right" class="my-notification" />
   <router-view />
 </template>
 
@@ -20,5 +21,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.my-notification {
+  margin-top: 80px;
 }
 </style>
