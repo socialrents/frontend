@@ -16,6 +16,7 @@ export default {
 	border: 0 none;
   transition: 0.2s;
 	color: #ffff;
+	font-weight: bold;
 }
 .button-main:hover {
 	cursor: pointer;
