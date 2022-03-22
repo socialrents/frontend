@@ -5,7 +5,7 @@
         <div class="card-title">Faça seu login</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
+            <input class="username" type="text" placeholder="E-mail ou Nome de usuário" v-model="userLogged.username"/>
             <br>
             <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
           </div>

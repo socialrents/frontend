@@ -5,13 +5,13 @@
         <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="email" type="text" placeholder="E-mail" v-model="userLogged.email"/>
+            <input class="email" type="email" placeholder="E-mail" v-model="userLogged.email"/>
             <br>
             <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
             <br>
-            <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
+            <input class="password" type="password" placeholder="Senha" v-model="userLogged.password1"/>
             <br>
-            <input class="password" type="password" placeholder="Repita sua senha" v-model="userLogged.password"/>
+            <input class="password" type="password" placeholder="Repita sua senha" v-model="userLogged.password2"/>
           </div>
          
             <MainButton class="signup-btn" msg="Cadastre-se como proprietário" v-on:click="signup"/>
@@ -34,16 +34,19 @@ export default {
       userLogged: {
         email: "",
         username: "",
-        password: ""
+        password1: "",
+        password2: ""
       }
     }
   },
   methods: {
-    async login() {
-        if (this.userLogged.username == "" || this.userLogged.password == "") {
+    async signup() {
+        if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
           this.$notify({ type: "error", text: "Preencha todos os campos!" });
+        } else if(this.userLogged.password1 != this.userLogged.password2) {
+          this.$notify({ type: "warn", text: "Senhas não são iguais!" });
         } else {
-          this.$notify({ type: "success", text: "Ok" })
+          this.$router.go(-1)
         }
     }
   }
