@@ -2,26 +2,23 @@
   <div>
     <div class="login-container">
       <div class="login-card">
-        <div class="card-title">Faça seu login</div>
+        <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
+            <input class="email" type="text" placeholder="E-mail" v-model="userLogged.email"/>
+            <br>
             <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
             <br>
             <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
+            <br>
+            <input class="password" type="password" placeholder="Repita sua senha" v-model="userLogged.password"/>
           </div>
-          <div class="btn-container">
-            <div class="logon-btn">
-              <MainButton class="login-btn" msg="Entrar" v-on:click="login"/>
-              <RouterLink to="/"><MainButton class="signup-btn" msg="Cadatre-se"/> </RouterLink>
-            </div>
-            <div class="google-container">
-              <MainButton class="google-button" msg="Entre com o Gmail" />
-            </div>
-          </div>
+         
+            <MainButton class="signup-btn" msg="Cadastre-se como cliente" v-on:click="signup"/>
         </div>
       </div>
       <div class="line"></div>
-      <img class="img-home" src="../../assets/login.jpeg">
+      <img class="img-home" src="../../assets/client.jpeg">
     </div>
   </div>
 </template>
@@ -35,6 +32,7 @@ export default {
   data() {
     return {
       userLogged: {
+        email: "",
         username: "",
         password: ""
       }
@@ -56,6 +54,7 @@ export default {
 .login-container {
   display: flex;
   justify-content: center;
+  margin-left: 60px;
 }
 input {
   background: #F3F3F3;
@@ -68,7 +67,7 @@ input {
 }
 .login-card {
   margin-top: 150px;
-  margin-right: 160px;
+  margin-right: 50px;
 }
 .card-title {
   font-weight: bold;
@@ -89,7 +88,7 @@ input {
   width: 295px;
 }
 .img-home {
-  width: 350px;
+  width: 550px;
   height: 400px;
   margin-top: 100px;
   margin-left: 50px;
@@ -104,20 +103,13 @@ input {
 .btn-container {
   margin-top: 10px;
 }
-.login-btn {
-	background: #4661ED;
-  margin-right: 10px;
-}
-.login-btn:hover {
-  background: #2d46c2;
-}
 .signup-btn {
-  background: #f3f3f3;
-  margin-left: 10px;
-  color: #4661ED;
+  background: #24A7F1;;
+  margin-right: 10px;
+  width: 295px;
 }
 .signup-btn:hover {
-  background: #dfdfdf;
+  background: #1381c0;
 }
 
 </style>

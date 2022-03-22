@@ -9,9 +9,9 @@
 		</div>
 	</div>	
 	<div class="card-btns">
-		<MainButton class="owner-btn" msg="Sou proprietário"/>
+		<RouterLink to="/signupOwner"><MainButton class="owner-btn" msg="Sou proprietário"/></RouterLink>
 		<div class="line"></div>
-		<MainButton class="client-btn" msg="Quero alugar"/>
+		<RouterLink to="/signupClient"><MainButton class="client-btn" msg="Quero alugar"/></RouterLink>
 	</div>
 </template>
 
