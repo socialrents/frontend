@@ -12,6 +12,11 @@
             <input class="password" required type="password" placeholder="Senha" v-model="userLogged.password1"/>
             <br>
             <input class="password" required type="password" placeholder="Repita sua senha" v-model="userLogged.password2"/>
+            <br>
+            <div class="location-container">
+              <input class="city" type="text" placeholder="Cidade" v-model="userLogged.location.city">
+              <input class="district" type="text" placeholder="Bairro" v-model="userLogged.location.district">
+            </div>
           </div>
          
             <MainButton class="signup-btn" msg="Cadastre-se como cliente" v-on:click="signup"/>
@@ -35,7 +40,11 @@ export default {
         email: "",
         username: "",
         password1: "",
-        password2: ""
+        password2: "",
+        location: {
+          city: "",
+          district: ""
+        }
       }
     }
   },
@@ -68,6 +77,13 @@ input {
   margin-bottom: 20px;
   width: 295px;
 }
+.city {
+  width: 137px;
+}
+.district {
+  margin-left: 20px;
+  width: 137px;
+}
 .login-card {
   margin-top: 150px;
   margin-right: 50px;
@@ -89,6 +105,9 @@ input {
   background: #E94747;
   color: #f3f3f3;
   width: 295px;
+}
+input:focus {
+  outline: 0;
 }
 .img-home {
   width: 550px;
