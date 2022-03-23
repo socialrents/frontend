@@ -9,9 +9,9 @@
             <br>
             <input class="username" required type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
             <br>
-            <input class="password" required type="password" placeholder="Senha" v-model="userLogged.password1"/>
+            <input class="password" required type="password" placeholder="Senha" v-model="userLogged.password"/>
             <br>
-            <input class="password" required type="password" placeholder="Repita sua senha" v-model="userLogged.password2"/>
+            <input class="password" required type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
           </div>
          
             <MainButton class="signup-btn" msg="Cadastre-se como cliente" v-on:click="signup"/>
@@ -34,16 +34,16 @@ export default {
       userLogged: {
         email: "",
         username: "",
-        password1: "",
-        password2: ""
-      }
+        password: ""
+      },
+      passwordCheck: ""
     }
   },
   methods: {
     async signup() {
-        if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
+        if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password == "" || this.userLogged.password2 == "") {
           this.$notify({ type: "error", text: "Preencha todos os campos!" });
-        } else if(this.userLogged.password1 != this.userLogged.password2) {
+        } else if(this.userLogged.password != this.passwordCheck) {
           this.$notify({ type: "warn", text: "Senhas não são iguais!" });
         } else {
           this.$router.go(-1)

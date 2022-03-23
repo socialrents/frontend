@@ -28,6 +28,7 @@
 <script>
 
 import MainButton  from '../buttons/MainButton.vue'
+import Api from '../../services/api'
 
 export default {
   name: "LoginPage",
@@ -45,7 +46,13 @@ export default {
         if (this.userLogged.username == "" || this.userLogged.password == "") {
           this.$notify({ type: "error", text: "Preencha todos os campos!" });
         } else {
-          this.$notify({ type: "success", text: "Ok" })
+          Api.get(`/users?username=${this.userLogged.username}&password=${this.userLogged.password}`)
+          .then((response) => {
+            console.log(response.data);
+            this.$notify({ type: "success", text: response.data[0].email })
+          }).catch((error) => {
+            console.log(error)
+          })
         }
     }
   }

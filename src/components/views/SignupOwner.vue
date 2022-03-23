@@ -9,9 +9,9 @@
             <br>
             <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
             <br>
-            <input class="password" type="password" placeholder="Senha" v-model="userLogged.password1"/>
+            <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
             <br>
-            <input class="password" type="password" placeholder="Repita sua senha" v-model="userLogged.password2"/>
+            <input class="password" type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
           </div>
          
             <MainButton class="signup-btn" msg="Cadastre-se como proprietário" v-on:click="signup"/>
@@ -25,6 +25,7 @@
 <script>
 
 import MainButton  from '../buttons/MainButton.vue'
+import Api from '../../services/api'
 
 export default {
   name: "LoginPage",
@@ -34,19 +35,23 @@ export default {
       userLogged: {
         email: "",
         username: "",
-        password1: "",
-        password2: ""
-      }
+        password: ""
+      },
+      passwordCheck: ""
     }
   },
   methods: {
     async signup() {
         if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
           this.$notify({ type: "error", text: "Preencha todos os campos!" });
-        } else if(this.userLogged.password1 != this.userLogged.password2) {
+        } else if(this.userLogged.password != this.passwordCheck) {
           this.$notify({ type: "warn", text: "Senhas não são iguais!" });
         } else {
-          this.$router.go(-1)
+          Api.post('/users', this.userLogged).then((response) => {
+            console.log(response)
+            this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
+          })
+          // this.$router.go(-1)
         }
     }
   }
