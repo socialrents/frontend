@@ -68,6 +68,13 @@ input {
   margin-bottom: 20px;
   width: 295px;
 }
+.city {
+  width: 137px;
+}
+.district {
+  margin-left: 20px;
+  width: 137px;
+}
 .login-card {
   margin-top: 150px;
   margin-right: 50px;
@@ -89,6 +96,9 @@ input {
   background: #E94747;
   color: #f3f3f3;
   width: 295px;
+}
+input:focus {
+  outline: 0;
 }
 .img-home {
   width: 550px;

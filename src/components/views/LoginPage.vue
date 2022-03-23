@@ -123,6 +123,9 @@ input {
   margin-left: 10px;
   color: #4661ED;
 }
+input:focus {
+  outline: 0;
+}
 .signup-btn:hover {
   background: #dfdfdf;
 }
