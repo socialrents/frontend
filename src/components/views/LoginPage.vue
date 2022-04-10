@@ -5,7 +5,7 @@
         <div class="card-title">Faça seu login</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="username" type="text" placeholder="E-mail ou Nome de usuário" v-model="userLogged.username"/>
+            <input class="username" type="text" placeholder="E-mail ou Nome de usuário" v-model="userLogged.login"/>
             <br>
             <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
           </div>
@@ -27,8 +27,8 @@
 </template>
 <script>
 
-import MainButton  from '../buttons/MainButton.vue'
-import Api from '../../services/api'
+import MainButton  from '../buttons/MainButton.vue';
+import Api from '../../services/api';
 
 export default {
   name: "LoginPage",
@@ -36,24 +36,23 @@ export default {
   data() {
     return {
       userLogged: {
-        username: "",
+        login: "",
         password: ""
       }
     }
   },
   methods: {
     async login() {
-        if (this.userLogged.username == "" || this.userLogged.password == "") {
-          this.$notify({ type: "error", text: "Preencha todos os campos!" });
-        } else {
-          Api.get(`/users?username=${this.userLogged.username}&password=${this.userLogged.password}`)
-          .then((response) => {
-            console.log(response.data);
-            this.$notify({ type: "success", text: response.data[0].email })
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
+      if (this.userLogged.login == "" || this.userLogged.password == "") {
+        this.$notify({ type: "error", text: "Preencha todos os campos!" });
+      } else {
+        Api.post('/login', this.userLogged).then((response) => {
+          console.log(response);
+          this.userLogged = response.data;
+        }).catch(() => {
+          this.$notify({ type: "error", text: "Usuário não encontrado!" });
+        })
+      }
     }
   }
 }

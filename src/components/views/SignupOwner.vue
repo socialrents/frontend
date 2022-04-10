@@ -7,7 +7,7 @@
           <div class="input-container">
             <input class="email" type="email" placeholder="E-mail" v-model="userLogged.email"/>
             <br>
-            <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
+            <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.login"/>
             <br>
             <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
             <br>
@@ -33,7 +33,7 @@ export default {
     return {
       userLogged: {
         email: "",
-        username: "",
+        login: "",
         password: ""
       },
       passwordCheck: ""
@@ -41,17 +41,19 @@ export default {
   },
   methods: {
     async signup() {
-        if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
-          this.$notify({ type: "error", text: "Preencha todos os campos!" });
-        } else if(this.userLogged.password != this.passwordCheck) {
-          this.$notify({ type: "warn", text: "Senhas não são iguais!" });
-        } else {
-          Api.post('/users', this.userLogged).then((response) => {
-            console.log(response)
-            this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
-          })
-          // this.$router.go(-1)
-        }
+      if (this.userLogged.email == "" || this.userLogged.login == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
+        this.$notify({ type: "error", text: "Preencha todos os campos!" });
+      } else if(this.userLogged.password != this.passwordCheck) {
+        this.$notify({ type: "warn", text: "Senhas não são iguais!" });
+      } else {
+        Api.post('/signupOwner', this.userLogged).then((response) => {
+          console.log(response.status);
+          this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
+        }).catch((error) => {
+          console.log(error);
+          this.$notify({ type: 'error', text: 'Usuário já existe!' })
+        })
+      }
     }
   }
 }
