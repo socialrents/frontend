@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style global>
 *{
   margin: 0;
   padding: 0;
@@ -19,7 +19,6 @@ export default {
   font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 .my-notification {

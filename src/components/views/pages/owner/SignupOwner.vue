@@ -17,14 +17,14 @@
         </div>
       </div>
       <div class="line"></div>
-      <img class="img-home" src="../../assets/owner.jpeg">
+      <img class="img-home" src="../../../../assets/owner.jpeg">
     </div>
   </div>
 </template>
 <script>
 
-import MainButton  from '../buttons/MainButton.vue'
-import Api from '../../services/api'
+import MainButton  from '../../../buttons/MainButton.vue'
+import Api from '../../../../services/api'
 
 export default {
   name: "LoginPage",

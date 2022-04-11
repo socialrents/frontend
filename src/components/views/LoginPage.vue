@@ -49,6 +49,7 @@ export default {
         Api.post('/login', this.userLogged).then((response) => {
           console.log(response);
           this.userLogged = response.data;
+          this.$router.push(`/ownerPage`);
         }).catch(() => {
           this.$notify({ type: "error", text: "Usuário não encontrado!" });
         })
