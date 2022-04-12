@@ -5,11 +5,11 @@
         <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="email" type="email" placeholder="E-mail" v-model="userLogged.email"/>
+            <input class="email" type="email" placeholder="E-mail" v-model="userCreated.email"/>
             <br>
-            <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.login"/>
+            <input class="username" type="text" placeholder="Nome de usuário" v-model="userCreated.login"/>
             <br>
-            <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"/>
+            <input class="password" type="password" placeholder="Senha" v-model="userCreated.password"/>
             <br>
             <input class="password" type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
           </div>
@@ -31,7 +31,7 @@ export default {
   components: { MainButton },
   data() {
     return {
-      userLogged: {
+      userCreated: {
         email: "",
         login: "",
         password: ""
@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     async signup() {
-      if (this.userLogged.email == "" || this.userLogged.login == "" || this.userLogged.password1 == "" || this.userLogged.password2 == "") {
+      if (this.userCreated.email == "" || this.userCreated.login == "" || this.userCreated.password == "" || this.passwordCheck == "") {
         this.$notify({ type: "error", text: "Preencha todos os campos!" });
-      } else if(this.userLogged.password != this.passwordCheck) {
+      } else if(this.userCreated.password != this.passwordCheck) {
         this.$notify({ type: "warn", text: "Senhas não são iguais!" });
       } else {
-        Api.post('/signupOwner', this.userLogged).then((response) => {
+        Api.post('/signupOwner', this.userCreated).then((response) => {
           console.log(response.status);
           this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
         }).catch((error) => {

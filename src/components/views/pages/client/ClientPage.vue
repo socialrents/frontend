@@ -12,7 +12,7 @@
 
 <script>
 
-import NavBar from './OwnerNavBar.vue';
+import NavBar from './ClientNavBar.vue';
 import UserCard from '../../../UserCard.vue';
 
 export default {
@@ -26,7 +26,6 @@ export default {
 .header {
   display: flex;
 }
-
 .header .title {
   margin-top: 30px;
   margin-left: 20px;

@@ -47,9 +47,15 @@ export default {
         this.$notify({ type: "error", text: "Preencha todos os campos!" });
       } else {
         Api.post('/login', this.userLogged).then((response) => {
-          console.log(response);
-          this.userLogged = response.data;
-          this.$router.push(`/ownerPage`);
+          this.userLogged = response.data; // criar uma seção para o usuário encontrado
+          console.log(this.userLogged);
+
+          if (this.userLogged.type === 'owner') {
+            this.$router.push(`/ownerPage`);
+          } else if (this.userLogged.type === 'client') {
+            this.$router.push('/clientPage');
+          }
+
         }).catch(() => {
           this.$notify({ type: "error", text: "Usuário não encontrado!" });
         })

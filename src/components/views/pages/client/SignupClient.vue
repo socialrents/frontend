@@ -5,11 +5,11 @@
         <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="email" required type="email" placeholder="E-mail" v-model="userLogged.email"/>
+            <input class="email" required type="email" placeholder="E-mail" v-model="userCreated.email"/>
             <br>
-            <input class="username" required type="text" placeholder="Nome de usuário" v-model="userLogged.username"/>
+            <input class="username" required type="text" placeholder="Nome de usuário" v-model="userCreated.login"/>
             <br>
-            <input class="password" required type="password" placeholder="Senha" v-model="userLogged.password"/>
+            <input class="password" required type="password" placeholder="Senha" v-model="userCreated.password"/>
             <br>
             <input class="password" required type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
           </div>
@@ -18,22 +18,23 @@
         </div>
       </div>
       <div class="line"></div>
-      <img class="img-home" src="../../assets/client.jpeg">
+      <img class="img-home" src="../../../../assets/client.jpeg">
     </div>
   </div>
 </template>
 <script>
 
-import MainButton  from '../buttons/MainButton.vue'
+import MainButton  from '../../../buttons/MainButton.vue'
+import Api from '../../../../services/api'
 
 export default {
   name: "LoginPage",
   components: { MainButton },
   data() {
     return {
-      userLogged: {
+      userCreated: {
         email: "",
-        username: "",
+        login: "",
         password: ""
       },
       passwordCheck: ""
@@ -41,13 +42,19 @@ export default {
   },
   methods: {
     async signup() {
-        if (this.userLogged.email == "" || this.userLogged.username == "" || this.userLogged.password == "" || this.userLogged.password2 == "") {
-          this.$notify({ type: "error", text: "Preencha todos os campos!" });
-        } else if(this.userLogged.password != this.passwordCheck) {
-          this.$notify({ type: "warn", text: "Senhas não são iguais!" });
-        } else {
-          this.$router.go(-1)
-        }
+      if (this.userCreated.email == "" || this.userCreated.login == "" || this.userCreated.password == "" || this.passwordCheck == "") {
+        this.$notify({ type: "error", text: "Preencha todos os campos!" });
+      } else if(this.userCreated.password != this.passwordCheck) {
+        this.$notify({ type: "warn", text: "Senhas não são iguais!" });
+      } else {
+        Api.post('/signupClient', this.userCreated).then((response) => {
+          console.log(response.status);
+          this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
+        }).catch((error) => {
+          console.log(error);
+          this.$notify({ type: 'error', text: 'Usuário já existe!' })
+        })
+      }
     }
   }
 }
