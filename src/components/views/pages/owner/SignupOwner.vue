@@ -14,6 +14,7 @@
             <input class="password" type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
           </div>
             <MainButton class="signup-btn" msg="Cadastre-se como proprietário" v-on:click="signup"/>
+            <router-link to="/"> <MainButton class="return-btn" :msg="'Voltar'"/> </router-link>
         </div>
       </div>
       <div class="line"></div>
@@ -125,10 +126,14 @@ input:focus {
 .signup-btn {
 	background: #4661ED;
   margin-right: 10px;
-	width: 295px;
+	width: 220px;
 }
 .signup-btn:hover {
   background: #2d46c2;
 }
-
+.return-btn {
+  width: 60px;
+  color: #757575;
+  border: 1px solid #838383;
+}
 </style>

@@ -7,6 +7,7 @@ const routes = [
     { path: "/signupClient", component: () => import('../components/views/pages/client/SignupClient.vue') },
     { path: "/ownerPage", component: () => import('../components/views/pages/owner/OwnerPage.vue') },
     { path: "/clientPage", component: () => import('../components/views/pages/client/ClientPage.vue') },
+    { path: "/newParty", component: () => import('../components/views/pages/client/forms/NewPartyForm.vue') }
 ]
 
 const router = createRouter({

@@ -2,13 +2,16 @@
   <div id="card">
     <img id="user-img" src="../assets/user.jpg" alt="">
     <div class="line"></div>
-    <h4 id="user-name">Leonardo cristian</h4>
+    <h4 id="user-name">{{ user.login }}</h4>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UserCard'
+  name: 'UserCard',
+  props: {
+    user: Object
+  }
 }
 </script>
 

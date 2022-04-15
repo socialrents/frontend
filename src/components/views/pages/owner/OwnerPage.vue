@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="nav-bar">
-      <NavBar />
+      <OwnerNavBar />
     </div>
     <div class="header">
       <UserCard />
@@ -12,12 +12,12 @@
 
 <script>
 
-import NavBar from './OwnerNavBar.vue';
+import OwnerNavBar from './OwnerNavBar.vue';
 import UserCard from '../../../UserCard.vue';
 
 export default {
   name: 'OwnerPage',
-  components: { NavBar, UserCard }  
+  components: { OwnerNavBar, UserCard }  
 }
 
 </script>
