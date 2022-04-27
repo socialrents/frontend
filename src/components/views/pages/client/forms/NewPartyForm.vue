@@ -8,27 +8,27 @@
           <div class="descriptionInput">
             <label>Descrição do evento</label>
             <br>
-            <textarea name="description" id="description" cols="80" rows="10" placeholder="Digite aqui uma descrição detalhada do evento" />
+            <textarea name="description" id="description" cols="80" rows="10" placeholder="Digite aqui uma descrição detalhada do evento" v-model="party.description"/>
           </div>
           <div class="inputs">
             <div class="startDate">
               <label>Data de início</label>
               <br>
-              <input type="date" name="startDate" class="dateInput">
+              <input type="date" name="startDate" class="dateInput" v-model="party.startDate" />
             </div>
             <div class="endDate">
               <label>Data de término</label>
               <br>
-              <input type="date" name="endDate" class="dateInput">
+              <input type="date" name="endDate" class="dateInput" v-model="party.endDate" />
             </div>
             <div class="qtdPeople">
               <label>Quantidade de pessoas</label>
               <br>
-              <input type="number" name="qtdPeople" class="qtdPeopleInput">
+              <input type="number" name="qtdPeople" class="qtdPeopleInput" v-model="party.nOfPeople" />
             </div>
           </div>
           <div class="buttons">
-            <MainButton id="addPartyBtn" :msg="'Cadatrar evento'"/>
+            <MainButton id="addPartyBtn" :msg="'Cadatrar evento'" v-on:click='createParty'/>
             <MainButton id="houseBtn" :msg="'Escolher imóvel'"/>
           </div>
         </div> 
@@ -41,16 +41,33 @@
 
 import ClientNavBar from '../ClientNavBar.vue';
 import MainButton from '../../../../buttons/MainButton.vue'
+import Api from '../../../../../services/api.js'
 
 export default {
   name: 'NewPartyForm',
   components: { ClientNavBar, MainButton },
   data() {
-    return {
-      
-    }
-  } 
+		return {
+			party: {
+				startDate: "",
+				endDate: "",
+				nOfDays: 3,
+				nOfPeople: 0,
+				description: ""
+			}
+		}
+  },
+  methods: {
+	async createParty() {
+		await Api.post('/newParty', this.party).then(() => {
+			alert('Imóvel cadastrado com sucesso!');
+		}).catch(() => {
+			alert('Erro ao cadastrar imóvel');
+		})
+	}
+  }
 }
+
 </script>
 
 <style>
