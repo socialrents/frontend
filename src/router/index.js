@@ -8,11 +8,24 @@ const routes = [
     { path: "/ownerPage", component: () => import('../components/views/pages/owner/OwnerPage.vue') },
     { path: "/clientPage", component: () => import('../components/views/pages/client/ClientPage.vue') },
     { path: "/newParty", component: () => import('../components/views/pages/client/forms/NewPartyForm.vue') }
-]
+];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
+});
+
+const publicPages = ['/', '/login', '/signupClient', '/signupOwner'];
+
+router.beforeEach((to, from, next) => {
+    const isPublicPage = publicPages.includes(to.path);
+    const authenticate = sessionStorage.getItem('socialrents-loggedIn');
+    console.log(authenticate);
+    if (isPublicPage || authenticate === 'true' ) {
+        next();
+    } else {
+        next('/login');
+    }
+});
 
 export default router

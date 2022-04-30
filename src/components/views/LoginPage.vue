@@ -29,6 +29,7 @@
 
 import MainButton  from '../buttons/MainButton.vue';
 import Api from '../../services/api';
+import md5 from 'blueimp-md5'
 
 export default {
   name: "LoginPage",
@@ -46,19 +47,43 @@ export default {
       if (this.userLogged.login == "" || this.userLogged.password == "") {
         this.$notify({ type: "error", text: "Preencha todos os campos!" });
       } else {
-        Api.post('/login', this.userLogged).then((response) => {
-          this.userLogged = response.data; // criar uma seção para o usuário encontrado
-          console.log(this.userLogged);
+        const store = this.$store;
+        console.log(this.userLogged);
+        try {
+          this.userLogged.password = md5(this.userLogged.password)
+          const response = await Api.post('/login', this.userLogged);
+          const { user, error } = response.data;
 
-          if (this.userLogged.type === 'owner') {
-            this.$router.push(`/ownerPage`);
-          } else if (this.userLogged.type === 'client') {
-            this.$router.push('/clientPage');
+          if(response.status === 200) {
+            store.commit('setUser', { ...user });
+            store.commit('setLoggedIn', true);
+            
+            if (user.type === 'owner') {
+              
+              this.$router.push('/ownerPage');
+            } else if (user.type === 'client') {
+              this.$router.push('/clientPage');
+            }
+
+          } else {
+            console.error(error);
+            this.$notify({ type: "error", text: error });
+            store.commit("setUser", null);
+            store.commit("setloggedIn", false);
           }
-
-        }).catch(() => {
+        } catch(e) {
+          console.log(e);
           this.$notify({ type: "error", text: "Usuário não encontrado!" });
-        })
+        }
+      }
+    },
+    mounted() {
+      if (this.$store.state.loggedIn) {
+        if (this.$store.user.type === 'owner') {
+          this.$router.push(`/ownerPage`);
+        } else if (this.$store.user.type === 'client') {
+          this.$router.push('/clientPage');
+        }
       }
     }
   }

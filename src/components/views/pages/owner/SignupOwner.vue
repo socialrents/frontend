@@ -26,6 +26,7 @@
 
 import MainButton  from '../../../buttons/MainButton.vue'
 import Api from '../../../../services/api'
+import md5 from 'blueimp-md5'
 
 export default {
   name: "LoginPage",
@@ -45,8 +46,10 @@ export default {
       if (this.userCreated.email == "" || this.userCreated.login == "" || this.userCreated.password == "" || this.passwordCheck == "") {
         this.$notify({ type: "error", text: "Preencha todos os campos!" });
       } else if(this.userCreated.password != this.passwordCheck) {
+        
         this.$notify({ type: "warn", text: "Senhas não são iguais!" });
       } else {
+        this.userCreated.password = md5(this.userCreated.password);
         Api.post('/signupOwner', this.userCreated).then((response) => {
           console.log(response.status);
           this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})

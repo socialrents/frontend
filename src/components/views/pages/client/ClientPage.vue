@@ -4,7 +4,7 @@
       <ClientNavBar />
     </div>
     <div class="header">
-      <UserCard/>
+      <UserCard :user="$store.state.user" />
       <h2 class="title">Seus eventos</h2>
       <MainButton class="add-party-btn" :msg="'Criar novo evento'" v-on:click="newParty"/>
     </div>

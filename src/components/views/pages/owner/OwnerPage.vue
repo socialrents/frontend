@@ -4,7 +4,7 @@
       <OwnerNavBar />
     </div>
     <div class="header">
-      <UserCard />
+      <UserCard :user="$store.state.user" />
       <h2 class="title">Imóveis reservados</h2>
     </div>
   </div>

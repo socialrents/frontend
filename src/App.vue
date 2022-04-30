@@ -6,7 +6,14 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return { loaded: false };
+  },
+  async mounted() {
+    await this.$store.dispatch("initialCredentialCheck");
+    this.loaded = true;
+  }
 }
 </script>
 
