@@ -1,5 +1,6 @@
 <template>
   <div id="nav">
+    <div class="logo">SocialRents</div>
     <div class="icons">
       <div class="profile">
         <vue-feather type="user" />
@@ -42,12 +43,17 @@ export default {
   width: 100%;
   padding:30px;
   background: #4661ED;
+  display: flex;
 }
-
+.logo {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
 .icons {
   width: 120px;
   color: white;
-  margin-left: 90%;
+  margin-left: 80%;
   display: flex;
   justify-content: space-between;
 } 

@@ -4,32 +4,48 @@
       <OwnerNavBar />
     </div>
     <div class="pageCenter">
+        <div class="houseForm">
       <div class="header">
         <h2 class="title">Cadastrar novo imóvel</h2>
 			</div>
-        <div class="partyForm">
 					<div class="inputs">
 						<div class="others">
               <div class="city">
                 <label>Cidade</label>
                 <br>
-                <input type="text" name="city" class="cityInput" />
+                <input type="text" name="city" class="cityInput" v-model="newHouse.city" />
               </div>
 							
-              <div class="qtdPeople">
+              <div class="district">
                 <label>Bairro</label>
                 <br>
-                <input type="number" name="qtdPeople" class="qtdPeopleInput" />
+                <input type="Text" name="district" class="districtInput" v-model="newHouse.district" />
               </div>
             </div>
           </div>
           <div class="descriptionInput">
             <label>Descrição do imóvel</label>
             <br>
-            <textarea name="description" id="description" cols="70" rows="10" placeholder="Digite aqui uma descrição detalhada contendo as características do imóvel." />
+            <textarea 
+							name="description" 
+							id="description" 
+							cols="79" rows="10" 
+							placeholder="Digite aqui uma descrição detalhada contendo as características do imóvel." 
+							v-model="newHouse.description"
+						/>
           </div>
           <div class="buttons">
-						<MainButton id="addPartyBtn" :msg="'Cadatrar evento'" />
+						<MainButton id="addHouseBtn" :msg="'Cadatrar imóvel'" v-on:click="addHouse"/>
+						<div class="img">
+							<label>Foto do imóvel</label>
+              <br>
+							<input type="file" name="img" class="imgInput" placeholder="Preço da diária (R$)" />
+						</div>
+						<div class="price">
+							<label>Preço da diária</label>
+              <br>
+							<input type="text" name="price" class="priceInput" v-model="newHouse.price" />
+						</div>
 					</div>
         </div> 
     </div>
@@ -40,13 +56,41 @@
 
 import OwnerNavBar from '../OwnerNavBar.vue';
 import MainButton from '../../../../buttons/MainButton.vue';
+import Api from '../../../../../services/api';
 
 export default {
   name: 'HousesPage',
   components: { OwnerNavBar, MainButton },
+	data() {
+		return {
+			newHouse: {
+				city: "",
+				district: "",
+				description: "",
+				price: "",
+			}
+		}
+	},
   methods: {
-    newHouse() {
-			alert('oi');
+    async addHouse() {
+			this.$swal.fire({
+				title: 'Confirmar cadastro de imóvel?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Não',
+				confirmButtonText: 'Sim'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					const response = Api.post('/addHouse', this.newHouse);
+					if (response.status === 200) {
+						this.$notify({ type: "success", text: "Imóvel cadastrado com sucesso!" });
+					} else {
+						this.$notify({ type: "error", text: "Erro ao cadastrar imóvel!" });
+					}
+				}
+			})
     }
   }
 }
@@ -59,20 +103,20 @@ export default {
   align-items: center;
   flex-direction: column;
 }
-.pageCenter .header .title {
-  margin-top: 30px;
-  margin-right: 380px;
+.swal-popup {
+	font-family: Roboto;
 }
 
 .newPartyCard {
   margin-top: 30px;
 } 
-.partyForm {
-  margin-top: 50px;
+.houseForm {
+  margin-top: 20px;
 	width: 600px;
 }
 .descriptionInput {
 	width: 500px;
+	margin-top: 20px;
 }
 .descriptionInput textarea#description {
   padding: 15px;
@@ -89,7 +133,7 @@ export default {
   outline: 0;
 }
 .inputs {
-  margin-top: 15px;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
 }
@@ -98,6 +142,8 @@ input {
   border: 3px solid #838383;
   border-radius: 3px;
   background: #f3f3f3;
+	height: 25px;
+	margin-top: 15px;
 }
 input:focus {
   outline: 0;
@@ -106,17 +152,21 @@ input:focus {
   width: 270px;
   height: 25px;
   margin-top: 15px;
-  margin: 10px;
 }
 .others {
 	display: flex;
 }
 .buttons {
-  margin-top: 50px;
+  margin-top: 25px;
   display: flex;
   flex-direction: row-reverse;
+	justify-content: space-between;
 }
-#addPartyBtn {
-  background: #24A7F1;
+.district {
+	margin-left: 32px;
+}
+#addHouseBtn {
+	margin-top: 30px;
+  background: #4661ED;
 }
 </style>

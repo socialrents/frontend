@@ -72,7 +72,7 @@ export default {
     async createParty() {
       console.log(this.party);
       await Api.post('/newParty', this.party).then(() => {
-        alert('Imóvel cadastrado com sucesso!');
+        this.$swal('Hello Vue world!!!');
       }).catch(() => {
         alert('Erro ao cadastrar imóvel');
       })
