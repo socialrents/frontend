@@ -36,10 +36,10 @@
           </div>
           <div class="buttons">
 						<MainButton id="addHouseBtn" :msg="'Cadatrar imóvel'" v-on:click="addHouse"/>
-						<div class="img">
-							<label>Foto do imóvel</label>
+						<div class="sqrmeters">
+							<label>Metros quadrados</label>
               <br>
-							<input type="file" name="img" class="imgInput" placeholder="Preço da diária (R$)" />
+							<input type="number" name="sqrmeters" class="sqrmetersInput" placeholder="Metros quadrados" v-model="newHouse.sqrmeters" />
 						</div>
 						<div class="price">
 							<label>Preço da diária</label>
@@ -64,9 +64,11 @@ export default {
 	data() {
 		return {
 			newHouse: {
+				description: "",
+				sqrmeters: "",
 				city: "",
 				district: "",
-				description: "",
+				owner: JSON.parse(localStorage.getItem("socialrents-user")).id,
 				price: "",
 			}
 		}
@@ -81,9 +83,10 @@ export default {
 				cancelButtonColor: '#d33',
 				cancelButtonText: 'Não',
 				confirmButtonText: 'Sim'
-			}).then((result) => {
+			}).then(async (result) => {
 				if (result.isConfirmed) {
-					const response = Api.post('/addHouse', this.newHouse);
+					const response = await Api.post('/newPlace', this.newHouse);
+					console.log(response);
 					if (response.status === 200) {
 						this.$swal.fire({
 							title: 'Imóvel cadastrado com sucesso!',
