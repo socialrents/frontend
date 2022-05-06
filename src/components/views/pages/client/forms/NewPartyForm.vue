@@ -71,10 +71,23 @@ export default {
   methods: {
     async createParty() {
       console.log(this.party);
-      await Api.post('/newParty', this.party).then(() => {
-        this.$swal('Hello Vue world!!!');
-      }).catch(() => {
-        alert('Erro ao cadastrar imóvel');
+      this.$swal.fire({
+        title: 'Confirmar agendamento de evento?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Não',
+				confirmButtonText: 'Sim'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const response = Api.post('/newParty', this.party)
+          if (response.status === 200) {
+						this.$notify({ type: "success", text: "Solicitação enviada com sucesso!" });
+					} else {
+						this.$notify({ type: "error", text: "Erro ao enviar solicitação!" });
+					}
+        }
       })
     },
     showPlaces(city) {
@@ -113,7 +126,7 @@ export default {
 .inputs {
   margin-top: 15px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .newPartyForm input {
   padding: 5px;
@@ -128,11 +141,11 @@ export default {
   width: 240px;
   height: 25px;
   margin-top: 15px;
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
 .buttons {
-  margin-top: 70px;
+  margin-top: 50px;
   display: flex;
   flex-direction: row-reverse;
 }
