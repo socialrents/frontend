@@ -8,7 +8,13 @@
           <div class="descriptionInput">
             <label>Descrição do evento</label>
             <br>
-            <textarea name="description" id="description" cols="80" rows="10" placeholder="Digite aqui uma descrição detalhada do evento" v-model="party.description"/>
+            <textarea 
+              name="description" 
+              id="description" 
+              cols="58" rows="8" 
+              placeholder="Digite aqui uma descrição detalhada do evento" 
+              v-model="party.description"
+            />
           </div>
           <div class="inputs">
             <div class="dates">

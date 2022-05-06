@@ -29,7 +29,7 @@
             <textarea 
 							name="description" 
 							id="description" 
-							cols="58" rows="10" 
+							cols="58" rows="8" 
 							placeholder="Digite aqui uma descrição detalhada contendo as características do imóvel." 
 							v-model="newHouse.description"
 						/>

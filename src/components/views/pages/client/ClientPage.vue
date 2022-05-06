@@ -9,6 +9,8 @@
       <MainButton class="add-party-btn" :msg="'Criar novo evento'" v-on:click="newParty"/>
     </div>
     <div class="main-page">
+      
+      <h2 class="noPartiesTitle" v-if="this.parties.length == 0">Nenhum evento agendado!</h2>
       <div class="parties" v-for="(item, index) in this.parties" v-bind:key="index">
           <PartyCard :party='item' />
       </div>
@@ -37,6 +39,7 @@ export default {
 
     const response = await Api.get(`/parties/${user.id}`);
     this.parties = response.data;
+    console.log(response.data)
   },
   methods: {
     newParty() {
@@ -55,7 +58,10 @@ export default {
   margin-top: 30px;
   margin-left: 20px;
 }
-
+.noPartiesTitle {
+  margin-top: 20px;
+  color: #919191;
+}
 .main-page {
   display: flex;
 flex-direction: column;
