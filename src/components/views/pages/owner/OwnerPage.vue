@@ -4,7 +4,7 @@
       <OwnerNavBar />
     </div>
     <div class="header">
-      <UserCard :user="$store.state.user" />
+      <UserCard :user="this.$store.state.user" />
       <h2 class="title">Imóveis reservados</h2>
     </div>
   </div>
@@ -17,7 +17,7 @@ import UserCard from '../../../UserCard.vue';
 
 export default {
   name: 'OwnerPage',
-  components: { OwnerNavBar, UserCard }  
+  components: { OwnerNavBar, UserCard },
 }
 
 </script>
@@ -30,9 +30,5 @@ export default {
 .header .title {
   margin-top: 30px;
   margin-left: 20px;
-}
-.add-button {
-  margin-left: 600px;
-  margin-top: 30px;
 }
 </style>

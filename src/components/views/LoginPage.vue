@@ -50,7 +50,7 @@ export default {
         const store = this.$store;
         console.log(this.userLogged);
         try {
-          this.userLogged.password = md5(this.userLogged.password)
+          this.userLogged.password = md5(this.userLogged.password);
           const response = await Api.post('/login', this.userLogged);
           const { user, error } = response.data;
 

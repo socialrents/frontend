@@ -1,11 +1,12 @@
 <template lang="html">
   <div class="party-card">
-	<div class='cardButtons'>
-		<div class='editar'></div>
-		<div class='remover'/>
+	<div class='cardButtons'>	
+			<vue-feather class='editar' vue-feather type="edit-3" />
+	
+			<vue-feather class='remover' vue-feather type="trash-2" />
 	</div>
     <div class="location">
-		<div class='houseImg' />
+		<img class="houseImg" src="../../../../assets/house.jpg">
 		<div class='address'>
 		Cidade: {{ party.city }} <br>
 		Bairro {{ party.district }} <br>
@@ -17,6 +18,7 @@
     </div> 
   </div>
 </template>
+
 <script>
 export default {
   name: 'PartyCard',
@@ -35,9 +37,8 @@ export default {
 }
 
 .party-card .houseImg {
-  border: 1px dashed red;
-  width: 150px;
-  height: 80px;
+  width: 200px;
+  height: 120px;
 }
 .party-card .cardButtons {
 	margin-left: 96%;
@@ -48,13 +49,17 @@ export default {
 }
 .party-card .cardButtons .editar {
 	background: #24A7F1;
-	width: 100px;
 	border-radius: 3px 0px 0px 3px;
+	height: 15px;
+	color: white;
+	padding: 3px;
 }
 .party-card .cardButtons .remover {
 	background: #E94747;
-	width: 100px;
 	border-radius: 0px 3px 3px 0px;
+	height: 15px;
+	color: white;
+	padding: 3px;
 }
 .party-card .location {
 	display: flex;

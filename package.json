@@ -12,12 +12,15 @@
     "axios": "^0.26.1",
     "blueimp-md5": "^2.19.0",
     "core-js": "^3.8.3",
+    "feather-icons": "^4.29.0",
     "store": "^2.0.12",
     "vue": "^3.2.13",
+    "vue-dropdowns": "^1.1.2",
     "vue-feather": "^2.0.0",
     "vue-feather-icons": "^5.1.0",
     "vue-modal-dialogs": "^3.0.0",
     "vue-router": "^4.0.13",
+    "vue-select": "^4.0.0-beta.3",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

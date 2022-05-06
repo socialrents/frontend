@@ -4,7 +4,7 @@
       <ClientNavBar />
     </div>
     <div class="header">
-      <UserCard :user="$store.state.user" />
+      <UserCard :user="this.$store.state.user" />
       <h2 class="title">Seus eventos</h2>
       <MainButton class="add-party-btn" :msg="'Criar novo evento'" v-on:click="newParty"/>
     </div>
@@ -21,36 +21,22 @@
 import ClientNavBar from './ClientNavBar.vue';
 import UserCard from '../../../UserCard.vue';
 import PartyCard from './Patycard.vue';
-import MainButton from '../../../buttons/MainButton.vue'
+import MainButton from '../../../buttons/MainButton.vue';
+import Api from '../../../../services/api';
 
 export default {
   name: 'OwnerPage',
   components: { ClientNavBar, UserCard, PartyCard, MainButton },
   data() {
     return {
-      parties: [
-        {
-          city: 'Barra do corda - MA',
-          district: 'Altamira',
-          total: 450.00,
-          description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Proin nec nisi tincidunt nulla porta lacinia consequat at tellus. 
-                        Suspendisse vestibulum fermentum purus`,
-          startDate: '20/04/2022',
-          endDate: '24/04/2022'
-        },
-        {
-          city: 'Barra do corda - MA',
-          district: 'Tresidela',
-          total: 300.00,
-          description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Proin nec nisi tincidunt nulla porta lacinia consequat at tellus. 
-                        Suspendisse vestibulum fermentum purus`,
-          startDate: '20/04/2022',
-          endDate: '24/04/2022'
-        }
-      ]
+      parties: []
     }
+  },
+  async mounted() {
+    const user = JSON.parse(localStorage.getItem("socialrents-user"))
+
+    const response = await Api.get(`/parties/${user.id}`);
+    this.parties = response.data;
   },
   methods: {
     newParty() {
@@ -69,18 +55,19 @@ export default {
   margin-top: 30px;
   margin-left: 20px;
 }
-.add-button {
-  margin-left: 600px;
-  margin-top: 30px;
-}
+
 .main-page {
-  margin-left: 300px;
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+  /* margin-left: 300px; */
   margin-top: 20px;
 }
 .add-party-btn {
   background: #4661ED;
   margin-top: 30px;
-  margin-left: 49%;
+  margin-left: 32%;
 }
 .add-party-btn:hover {
   background: #24A7F1;

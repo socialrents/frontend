@@ -36,8 +36,10 @@ const store = createStore({
                     const { user } = response.data;
                     console.log(user);
                     commit('setUser', {
+                        id: user.id,
                         login: user.login,
-                        password: user.password
+                        password: user.password,
+                        type: user.type
                     })
                     commit('setLoggedIn', true);
                 } else {

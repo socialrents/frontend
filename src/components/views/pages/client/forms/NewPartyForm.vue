@@ -11,25 +11,34 @@
             <textarea name="description" id="description" cols="80" rows="10" placeholder="Digite aqui uma descrição detalhada do evento" v-model="party.description"/>
           </div>
           <div class="inputs">
-            <div class="startDate">
-              <label>Data de início</label>
-              <br>
-              <input type="date" name="startDate" class="dateInput" v-model="party.startDate" />
+            <div class="dates">
+              <div class="startDate">
+                <label>Data de início</label>
+                <br>
+                <input type="date" name="startDate" class="dateInput" v-model="party.startDate" />
+              </div>
+              <div class="endDate">
+                <label>Data de término</label>
+                <br>
+                <input type="date" name="endDate" class="dateInput" v-model="party.endDate" />
+              </div>
             </div>
-            <div class="endDate">
-              <label>Data de término</label>
-              <br>
-              <input type="date" name="endDate" class="dateInput" v-model="party.endDate" />
-            </div>
-            <div class="qtdPeople">
-              <label>Quantidade de pessoas</label>
-              <br>
-              <input type="number" name="qtdPeople" class="qtdPeopleInput" v-model="party.nOfPeople" />
+            <div class="others">
+              <div class="city">
+                <label>Cidade</label>
+                <br>
+                <input type="text" name="city" class="cityInput" v-model="party.city">
+              </div>
+              <div class="qtdPeople">
+                <label>Quantidade de pessoas</label>
+                <br>
+                <input type="number" name="qtdPeople" class="qtdPeopleInput" v-model="party.nOfPeople" />
+              </div>
             </div>
           </div>
           <div class="buttons">
             <MainButton id="addPartyBtn" :msg="'Cadatrar evento'" v-on:click='createParty'/>
-            <MainButton id="houseBtn" :msg="'Escolher imóvel'"/>
+            <MainButton id="houseBtn" :msg="'Escolher imóvel'" v-on:click='showPlaces(party.city)' />
           </div>
         </div> 
       </div>
@@ -53,24 +62,31 @@ export default {
 				endDate: "",
 				nOfDays: 3,
 				nOfPeople: 0,
-				description: ""
-			}
+        city: "",
+				description: "",
+        clientKey: JSON.parse(localStorage.getItem("socialrents-user")).id
+      }
 		}
   },
   methods: {
-	async createParty() {
-		await Api.post('/newParty', this.party).then(() => {
-			alert('Imóvel cadastrado com sucesso!');
-		}).catch(() => {
-			alert('Erro ao cadastrar imóvel');
-		})
-	}
+    async createParty() {
+      console.log(this.party);
+      await Api.post('/newParty', this.party).then(() => {
+        alert('Imóvel cadastrado com sucesso!');
+      }).catch(() => {
+        alert('Erro ao cadastrar imóvel');
+      })
+    },
+    showPlaces(city) {
+      if (city === "") alert('Preencha o campo da cidade!');
+      else this.$router.push(`/allPlaces/${city}`);
+    }
   }
 }
 
 </script>
 
-<style>
+<style scoped>
 .newPartyCard {
   display: flex;
   align-items: center;
@@ -97,7 +113,7 @@ export default {
 .inputs {
   margin-top: 15px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .newPartyForm input {
   padding: 5px;
@@ -108,16 +124,13 @@ export default {
 .newPartyForm input:focus {
   outline: 0;
 }
-.inputs .dateInput {
-  width: 170px;
+.inputs input {
+  width: 240px;
   height: 25px;
   margin-top: 15px;
+  margin: 10px;
 }
-.inputs .qtdPeopleInput {
-  width: 170px;
-  height: 25px;
-  margin-top: 15px;
-}
+
 .buttons {
   margin-top: 70px;
   display: flex;
