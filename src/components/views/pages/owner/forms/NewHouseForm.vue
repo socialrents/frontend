@@ -29,7 +29,7 @@
             <textarea 
 							name="description" 
 							id="description" 
-							cols="79" rows="10" 
+							cols="58" rows="10" 
 							placeholder="Digite aqui uma descrição detalhada contendo as características do imóvel." 
 							v-model="newHouse.description"
 						/>
@@ -85,9 +85,15 @@ export default {
 				if (result.isConfirmed) {
 					const response = Api.post('/addHouse', this.newHouse);
 					if (response.status === 200) {
-						this.$notify({ type: "success", text: "Imóvel cadastrado com sucesso!" });
+						this.$swal.fire({
+							title: 'Imóvel cadastrado com sucesso!',
+							icon: 'success'
+						})
 					} else {
-						this.$notify({ type: "error", text: "Erro ao cadastrar imóvel!" });
+						this.$swal.fire({
+							title: 'Erro ao cadastrar imóvel!',
+							icon: 'error'
+						})
 					}
 				}
 			})
@@ -166,7 +172,7 @@ input:focus {
 	margin-left: 32px;
 }
 #addHouseBtn {
-	margin-top: 30px;
+	margin-top: 32px;
   background: #4661ED;
 }
 </style>

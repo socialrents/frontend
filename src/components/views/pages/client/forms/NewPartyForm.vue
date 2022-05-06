@@ -79,13 +79,20 @@ export default {
 				cancelButtonColor: '#d33',
 				cancelButtonText: 'Não',
 				confirmButtonText: 'Sim'
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = Api.post('/newParty', this.party)
+          const response = await Api.post('/newParty', this.party)
+          console.log(response)
           if (response.status === 200) {
-						this.$notify({ type: "success", text: "Solicitação enviada com sucesso!" });
+						this.$swal.fire({
+							title: 'Solicitação enviada com sucesso!',
+							icon: 'success'
+						})
 					} else {
-						this.$notify({ type: "error", text: "Erro ao enviar solicitação!" });
+						this.$swal.fire({
+							title: 'Erro ao enviar solicitação!',
+							icon: 'error'
+						})
 					}
         }
       })

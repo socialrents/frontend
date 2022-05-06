@@ -21,9 +21,9 @@ export default {
 *{
   margin: 0;
   padding: 0;
+  font-family: Roboto;
 }
 #app {
-  font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

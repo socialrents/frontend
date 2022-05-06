@@ -3,7 +3,7 @@
 	<div class='cardButtons'>	
 			<vue-feather class='editar' vue-feather type="edit-3" />
 	
-			<vue-feather class='remover' vue-feather type="trash-2" />
+			<vue-feather class='remover' vue-feather type="trash-2" v-on:click="deleteParty(party.id)" />
 	</div>
     <div class="location">
 		<img class="houseImg" src="../../../../assets/house.jpg">
@@ -20,10 +20,42 @@
 </template>
 
 <script>
+
+import Api from '../../../../services/api';
+
 export default {
   name: 'PartyCard',
   props: {
     party: Object
+  },
+  methods: {
+		async deleteParty(id) {
+			this.$swal.fire({
+        title: 'Confirmar cancelamento de evento?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Não',
+				confirmButtonText: 'Sim'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await Api.delete(`/deleteParty/${id}`)
+          console.log(response)
+          if (response.status === 200) {
+						this.$swal.fire({
+							title: 'Evento cancelado com sucesso!',
+							icon: 'success'
+						})
+					} else {
+						this.$swal.fire({
+							title: 'Erro ao cancelar Evento!',
+							icon: 'error'
+						})
+					}
+        }
+      })
+		}
   }
 }
 </script>
