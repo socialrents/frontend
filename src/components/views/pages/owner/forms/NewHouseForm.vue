@@ -13,13 +13,25 @@
               <div class="city">
                 <label>Cidade</label>
                 <br>
-                <input type="text" name="city" class="cityInput" v-model="newHouse.city" />
+                <dropdown class="citySelection"
+                  :options="cities"
+                  :selected="citySelected"
+                  v-on:updateOption="selectcity"
+                  :placeholder="'Selecione um bairro'"
+									v-model="newHouse.city"
+								/>
               </div>
 							
               <div class="district">
                 <label>Bairro</label>
                 <br>
-                <input type="Text" name="district" class="districtInput" v-model="newHouse.district" />
+                <dropdown class="citySelection"
+                  :options="cities"
+                  :selected="citySelected"
+                  v-on:updateOption="selectcity"
+                  :placeholder="'Selecione um bairro'"
+									v-model="newHouse.district"
+								/>
               </div>
             </div>
           </div>
@@ -54,15 +66,23 @@
 
 <script>
 
+import dropdown from 'vue-dropdowns';
 import OwnerNavBar from '../OwnerNavBar.vue';
 import MainButton from '../../../../buttons/MainButton.vue';
 import Api from '../../../../../services/api';
 
 export default {
   name: 'HousesPage',
-  components: { OwnerNavBar, MainButton },
+  components: { OwnerNavBar, MainButton, 'dropdown': dropdown },
 	data() {
 		return {
+			cities: [
+				{name: 'Barra do corda'},
+				{name: 'Grajaú'}
+			],
+			citySelected: {
+				name: "Selecione uma cidade"
+			},
 			newHouse: {
 				description: "",
 				sqrmeters: "",
@@ -73,7 +93,13 @@ export default {
 			}
 		}
 	},
+	async mount() {
+		// enviar request get de cidades
+	},
   methods: {
+		selectCity(payload) {
+        this.citySelected.name = payload;
+    },
     async addHouse() {
 			this.$swal.fire({
 				title: 'Confirmar cadastro de imóvel?',
@@ -107,6 +133,12 @@ export default {
 </script>
 
 <style scoped>
+.citySelection {
+  border: 2px solid #838383;
+  border-radius: 3px;
+  background: #f3f3f3;
+	width: 275px;
+}
 .pageCenter {
   display: flex;
   align-items: center;
@@ -129,7 +161,7 @@ export default {
 }
 .descriptionInput textarea#description {
   padding: 15px;
-  border: 3px solid #838383;
+  border: 2px solid #838383;
   border-radius: 3px;
   margin-top: 15px;
   background: #f3f3f3;
@@ -148,7 +180,7 @@ export default {
 }
 input {
   padding: 5px;
-  border: 3px solid #838383;
+  border: 2px solid #838383;
   border-radius: 3px;
   background: #f3f3f3;
 	height: 25px;
