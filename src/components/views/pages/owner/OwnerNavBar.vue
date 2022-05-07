@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <div class="logo">SocialRents</div>
+    <div class="logo" v-on:click="homePage">SocialRents</div>
     <div class="icons">
       <div class="profile">
         <vue-feather type="user" />
@@ -33,6 +33,9 @@ export default {
     },
     houseClick() {
       this.$router.push('/houses');
+    },
+    homePage() {
+      this.$router.go('/ownerPage');
     }
   }
 }

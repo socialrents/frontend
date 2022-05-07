@@ -1,7 +1,8 @@
 <template>
     <div class="place-card">
-        <div class='cardButtons'>
-            <MainButton class="select-place" :msg="'Selecionar'" />
+        <div class='cardButtons'>	
+          <vue-feather class='editar' vue-feather type="edit-3" />
+          <vue-feather class='remover' vue-feather type="trash-2" v-on:click="deletePlace(place.id)" />
         </div>
         <div class="location">
             <div class='houseImg' />
@@ -12,20 +13,52 @@
             </div>
         </div>
         <div class="description">
-        Descrição: {{ place.description }} 
+        Descrição: {{ place.description }}
         </div> 
+        <div class="status">
+          <div v-if="place.reserved" class="reserved">Reservado</div>
+          <div v-else class="available">Disponível</div>
+        </div>
     </div>
 </template>
 
 <script>
 
-import MainButton from '../../../buttons/MainButton.vue';
+import Api from '../../../../services/api';
 
 export default {
   name: 'PlaceCard',
-  components: { MainButton },
   props: {
     place: Object
+  },
+  methods: {
+    async deletePlace(id) {
+			this.$swal.fire({
+        title: 'Confirmar exclusão de imóvel?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Não',
+				confirmButtonText: 'Sim'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await Api.delete(`/deletePlace/${id}`)
+          console.log(response)
+          if (response.status === 200) {
+						this.$swal.fire({
+							title: 'Imóvel deletado com sucesso!',
+							icon: 'success'
+						})
+					} else {
+						this.$swal.fire({
+							title: 'Erro ao deletar imóvel!',
+							icon: 'error'
+						})
+					}
+        }
+      })
+		}
   }
 }
 </script>
@@ -43,18 +76,51 @@ export default {
   width: 150px;
   height: 80px;
 }
+.status {
+  margin-top: 60px;
+  margin-left: 85%;
+  color: white;
+}
+.reserved {
+  background: #E94747;
+  width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
+  text-align: center;
+}
+.available {
+  text-align: center;
+  background: #1cc738;
+  width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
+}
 .place-card .cardButtons {
-	margin-left: 90%;
+	margin-left: 96%;
 	width: 100px;
 	margin-top: -30px;
 	height: 20px;
 	display: flex;
 }
 
-.place-card .cardButtons .select-place {
-    background: #1cc738;
+.place-card .cardButtons .editar {
+	background: #24A7F1;
+	border-radius: 3px 0px 0px 3px;
+	height: 15px;
+	color: white;
+	padding: 3px;
 }
-
+.place-card .cardButtons .remover {
+	background: #E94747;
+	border-radius: 0px 3px 3px 0px;
+	height: 15px;
+	color: white;
+	padding: 3px;
+}
 .place-card .location {
 	display: flex;
 }

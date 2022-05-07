@@ -5,7 +5,7 @@
     <div class="selectPlace">
         <h2 class="title">Escolha um imóvel para realizar seu evento</h2> 
         <div class="places" v-for="(item, index) in this.places" v-bind:key="index">
-            <PlaceCard :place='item' />  
+            <PlaceCardSelect :place='item' />  
         </div> 
     </div>
     </div>
@@ -15,12 +15,12 @@
 <script>
 
 import ClientNavBar from '../ClientNavBar.vue';
-import PlaceCard from '../../owner/PlaceCard.vue';
+import PlaceCardSelect from '../../owner/PlaceCardSelect.vue';
 import Api from '../../../../../services/api.js'
 
 export default {
     name: "SelectPlaceForm",
-    components: { ClientNavBar, PlaceCard },
+    components: { ClientNavBar, PlaceCardSelect },
     data() {
         return {
             places: []

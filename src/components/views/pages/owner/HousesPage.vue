@@ -24,6 +24,7 @@
 import OwnerNavBar from './OwnerNavBar.vue';
 import MainButton from '../../../buttons/MainButton.vue';
 import PlaceCard from './PlaceCard.vue';
+import Api from '../../../../services/api';
 
 export default {
   name: 'HousesPage',
@@ -39,7 +40,14 @@ export default {
       newHouse() {
         this.$router.push('/newHouse');
       }
-  }
+  },
+  async mounted() {
+    const user = JSON.parse(localStorage.getItem("socialrents-user"))
+
+    const response = await Api.get(`/places/${user.id}`);
+    this.places = response.data;
+    console.log(response.data)
+  },
 }
 
 </script>
