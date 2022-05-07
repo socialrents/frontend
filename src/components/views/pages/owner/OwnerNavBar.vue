@@ -8,6 +8,9 @@
       <div class="previous">
         <vue-feather type="corner-up-left" v-on:click="previousPage" />
       </div>
+      <div class="notifications">
+        <vue-feather type="bell" v-on:click="bellClick" />
+      </div>
       <div class="houses">
         <vue-feather type="home" v-on:click="houseClick" />
       </div>
@@ -36,6 +39,9 @@ export default {
     },
     homePage() {
       this.$router.go('/ownerPage');
+    },
+    bellClick() {
+      this.$router.push('/notifications');
     }
   }
 }
@@ -54,9 +60,9 @@ export default {
   font-size: 20px;
 }
 .icons {
-  width: 120px;
+  width: 150px;
   color: white;
-  margin-left: 80%;
+  margin-left: 78%;
   display: flex;
   justify-content: space-between;
 } 

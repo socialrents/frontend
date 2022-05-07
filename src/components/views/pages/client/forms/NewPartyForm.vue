@@ -30,11 +30,11 @@
               </div>
             </div>
             <div class="others">
-              <div class="city">
+              <!-- <div class="city">
                 <label>Cidade</label>
                 <br>
                 <input type="text" name="city" class="cityInput" v-model="party.city">
-              </div>
+              </div> -->
               <div class="qtdPeople">
                 <label>Quantidade de pessoas</label>
                 <br>
@@ -44,7 +44,7 @@
           </div>
           <div class="buttons">
             <MainButton id="addPartyBtn" :msg="'Cadatrar evento'" v-on:click='createParty'/>
-            <MainButton id="houseBtn" :msg="'Escolher imóvel'" v-on:click='showPlaces(party.city)' />
+            <MainButton id="houseBtn" :msg="'Escolher imóvel'" v-on:click='showPlaces' />
           </div>
         </div> 
       </div>
@@ -103,9 +103,8 @@ export default {
         }
       })
     },
-    showPlaces(city) {
-      if (city === "") alert('Preencha o campo da cidade!');
-      else this.$router.push(`/allPlaces/${city}`);
+    showPlaces() {
+      this.$router.push(`/allPlaces`);
     }
   }
 }
@@ -158,7 +157,7 @@ export default {
 }
 
 .buttons {
-  margin-top: 50px;
+  margin-top: -50px;
   display: flex;
   flex-direction: row-reverse;
 }

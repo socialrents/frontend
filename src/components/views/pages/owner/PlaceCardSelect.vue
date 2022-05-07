@@ -4,10 +4,10 @@
             <MainButton class="select-place" :msg="'Selecionar'" />
         </div>
         <div class="location">
-            <div class='houseImg' />
+            <img class="houseImg" src="../../../../assets/house.jpg">
             <div class='address'>
             Cidade: {{ place.city }} <br>
-            Bairro {{ place.district }} <br>
+            Bairro: {{ place.district }} <br>
             Valor da diária: {{place.price }} <br>
             </div>
         </div>
@@ -39,7 +39,6 @@ export default {
 }
 
 .place-card .houseImg {
-  border: 1px dashed red;
   width: 150px;
   height: 80px;
 }

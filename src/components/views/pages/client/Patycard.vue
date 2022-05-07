@@ -16,6 +16,11 @@
     <div class="description">
       Descrição: {{ party.description }} 
     </div> 
+	<div class="status">
+		<div v-if="party.status === 'denied'" class="denied">Negado</div>
+		<div v-else-if="party.status === 'confirmed'" class="confirmed">Confirmado</div>
+		<div v-else class="waiting">Aguardando</div>
+    </div>
   </div>
 </template>
 
@@ -71,6 +76,38 @@ export default {
 .party-card .houseImg {
   width: 200px;
   height: 120px;
+}
+.status {
+  margin-top: 40px;
+  margin-left: 85%;
+  color: white;
+}
+.denied {
+  background: #E94747;
+  width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
+  text-align: center;
+}
+.confirmed {
+  text-align: center;
+  background: #1cc738;
+  width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
+}
+.waiting {
+  text-align: center;
+  background: #ffb004;
+  width: 100px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
 }
 .party-card .cardButtons {
 	margin-left: 96%;
