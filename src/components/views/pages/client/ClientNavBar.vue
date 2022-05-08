@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <div class="logo">SocialRents</div>
+    <div class="logo" v-on:click="homePage">SocialRents</div>
     <div class="icons">
       <div class="profile">
         <vue-feather type="user" />
@@ -28,6 +28,9 @@ export default {
     },
     previousPage() {
       this.$router.go(-1);
+    },
+    homePage() {
+      this.$router.push('/ownerPage');
     }
   }
 }
@@ -43,6 +46,9 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 20px;
+}
+.logo:hover {
+  cursor: pointer;
 }
 .icons {
   width: 100px;

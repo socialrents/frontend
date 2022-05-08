@@ -30,11 +30,16 @@
               </div>
             </div>
             <div class="others">
-              <!-- <div class="city">
+              <div class="city">
                 <label>Cidade</label>
                 <br>
-                <input type="text" name="city" class="cityInput" v-model="party.city">
-              </div> -->
+                <dropdown class="citySelection"
+                  :options="cities"
+                  :selected="citySelected"
+                  v-on:updateOption="selectCity"
+                  :placeholder="'Selecione uma cidade'"
+                />
+              </div>
               <div class="qtdPeople">
                 <label>Quantidade de pessoas</label>
                 <br>
@@ -54,13 +59,14 @@
 
 <script>
 
+import dropdown from 'vue-dropdowns'
 import ClientNavBar from '../ClientNavBar.vue';
 import MainButton from '../../../../buttons/MainButton.vue'
 import Api from '../../../../../services/api.js'
 
 export default {
   name: 'NewPartyForm',
-  components: { ClientNavBar, MainButton },
+  components: { ClientNavBar, MainButton, 'dropdown': dropdown },
   data() {
 		return {
 			party: {
@@ -71,10 +77,27 @@ export default {
         city: "",
 				description: "",
         clientKey: JSON.parse(localStorage.getItem("socialrents-user")).id
+      },
+      cities: [],
+      citySelected: {
+        name: 'Selecione uma cidade'
       }
 		}
   },
+  async mounted() {
+      // configurar cidades do bd
+      const response = await Api.get('/allCities');
+
+      for (const city of response.data) {
+        console.log(city)
+        this.cities.push(city)
+      }
+  },
   methods: {
+    selectCity(payload) {
+      this.citySelected.name = { ...payload }
+      console.log({...payload})
+    },
     async createParty() {
       console.log(this.party);
       this.$swal.fire({
@@ -104,7 +127,9 @@ export default {
       })
     },
     showPlaces() {
-      this.$router.push(`/allPlaces`);
+      const city = { ...this.citySelected.name }
+      console.log(city)
+      this.$router.push(`/allPlaces/${city.name}`);
     }
   }
 }
@@ -118,12 +143,18 @@ export default {
   flex-direction: column;
   margin-top: 30px;
 } 
+.citySelection {
+  border: 2px solid #838383;
+  border-radius: 3px;
+  background: #f3f3f3;
+  width: 250px;
+}
 .partyForm {
   margin-top: 50px;
 }
 .descriptionInput textarea#description {
   padding: 15px;
-  border: 3px solid #838383;
+  border: 2px solid #838383;
   border-radius: 3px;
   margin-top: 15px;
   background: #f3f3f3;
@@ -142,7 +173,7 @@ export default {
 }
 .newPartyForm input {
   padding: 5px;
-  border: 3px solid #838383;
+  border: 2px solid #838383;
   border-radius: 3px;
   background: #f3f3f3;
 }
@@ -157,7 +188,7 @@ export default {
 }
 
 .buttons {
-  margin-top: -50px;
+  margin-top: 50px;
   display: flex;
   flex-direction: row-reverse;
 }

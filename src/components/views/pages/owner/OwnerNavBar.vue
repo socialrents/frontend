@@ -38,7 +38,7 @@ export default {
       this.$router.push('/houses');
     },
     homePage() {
-      this.$router.go('/ownerPage');
+      this.$router.push('/ownerPage');
     },
     bellClick() {
       this.$router.push('/notifications');
@@ -58,6 +58,9 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 20px;
+}
+.logo:hover {
+  cursor: pointer;
 }
 .icons {
   width: 150px;

@@ -4,6 +4,10 @@
     <div class="selectPlaceForm">
     <div class="selectPlace">
         <h2 class="title">Escolha um imóvel para realizar seu evento</h2> 
+        <div v-if="loadingPlaces">
+          <h2 class="noPlacesTitle">Carregando imóveis...</h2>
+        </div>
+        <div v-else>
         <div class="locationFilter">
           <dropdown class="citySelection"
                   :options="districts"
@@ -12,11 +16,9 @@
                   :placeholder="'Selecione um bairro'"
         />
         </div>
-        <div v-if="loadingPlaces">
-          <h2 class="noPlacesTitle">Carregando imóveis...</h2>
-        </div>
-        <div v-else class="places" v-for="(item, index) in this.places" v-bind:key="index">
+          <div class="places" v-for="(item, index) in this.places" v-bind:key="index">
             <PlaceCardSelect :place='item' />  
+          </div>
         </div> 
     </div>
     </div>
@@ -37,10 +39,7 @@ export default {
         return {
             places: [],
             loadingPlaces: true,
-            districts: [
-              {name: 'Barra do corda'},
-              {name: 'Grajaú'}
-            ],
+            districts: [],
             districtSelected: {
               name: "Selecione um bairro"
             }
@@ -52,10 +51,18 @@ export default {
       }
     },
     async mounted() {
-        const response = await Api.get(`/allPlaces`);
-        console.log(response.data);
-        this.places = response.data;
+        const cityName = this.$route.params.city;
+
+        const responsePlaces = await Api.get(`/allPlaces/${cityName}`);
+        this.places = responsePlaces.data;
         this.loadingPlaces = false;
+
+        const responseDistricts = await Api.get(`/allDistricts/${cityName}`)
+
+        this.districts = [];
+        for (const district of responseDistricts.data) {
+          this.districts.push(district);
+        }
     }
 }
 </script>

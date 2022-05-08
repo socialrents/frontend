@@ -26,9 +26,9 @@
                 <label>Bairro</label>
                 <br>
                 <dropdown class="citySelection"
-                  :options="cities"
-                  :selected="citySelected"
-                  v-on:updateOption="selectcity"
+                  :options="districts"
+                  :selected="districtSelected"
+                  v-on:updateOption="selectdistrict"
                   :placeholder="'Selecione um bairro'"
 									v-model="newHouse.district"
 								/>
@@ -76,12 +76,13 @@ export default {
   components: { OwnerNavBar, MainButton, 'dropdown': dropdown },
 	data() {
 		return {
-			cities: [
-				{name: 'Barra do corda'},
-				{name: 'Grajaú'}
-			],
+			cities: [],
 			citySelected: {
 				name: "Selecione uma cidade"
+			},
+			districts: [],
+			districtSelected: {
+				name: "Selecione um bairro"
 			},
 			newHouse: {
 				description: "",
@@ -93,12 +94,31 @@ export default {
 			}
 		}
 	},
-	async mount() {
-		// enviar request get de cidades
+	async mounted() {
+		// configurar cidades do bd
+		const response = await Api.get('/allCities');
+
+		for (const city of response.data) {
+			console.log(city)
+			this.cities.push(city)
+		}
 	},
   methods: {
-		selectCity(payload) {
-        this.citySelected.name = payload;
+		async selectcity(payload) {
+      this.citySelected.name = { ...payload }
+      const city = {...payload}
+			
+			const response = await Api.get(`/allDistricts/${city.name}`)
+
+			this.districts = [];
+			for (const district of response.data) {
+				this.districts.push(district);
+			}
+
+    },
+		selectdistrict(payload) {
+      this.districtSelected.name = { ...payload }
+      console.log({...payload})
     },
     async addHouse() {
 			this.$swal.fire({
@@ -111,7 +131,10 @@ export default {
 				confirmButtonText: 'Sim'
 			}).then(async (result) => {
 				if (result.isConfirmed) {
+					this.newHouse.city = {...this.citySelected.name};
+					this.newHouse.district = {...this.districtSelected.name};
 					const response = await Api.post('/newPlace', this.newHouse);
+					console.log(this.newHouse)
 					console.log(response);
 					if (response.status === 200) {
 						this.$swal.fire({

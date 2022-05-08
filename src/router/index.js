@@ -10,7 +10,7 @@ const routes = [
     { path: "/newHouse", component: () => import('../components/views/pages/owner/forms/NewHouseForm.vue')},
     { path: "/clientPage", component: () => import('../components/views/pages/client/ClientPage.vue')},
     { path: "/newParty", component: () => import('../components/views/pages/client/forms/NewPartyForm.vue')},
-    { path: "/allPlaces", component: () => import('../components/views/pages/client/forms/SelectPlace.vue')}
+    { path: "/allPlaces/:city", component: () => import('../components/views/pages/client/forms/SelectPlace.vue')}
 ];
 
 const router = createRouter({
