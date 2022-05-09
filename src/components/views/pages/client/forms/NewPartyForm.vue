@@ -71,6 +71,7 @@ export default {
   data() {
 		return {
 			party: {
+        id: null,
 				startDate: "",
 				endDate: "",
 				nOfDays: 0,
@@ -88,7 +89,10 @@ export default {
   async mounted() {
       // configurar cidades do bd
       const response = await Api.get('/allCities');
+      const idResponse = await Api.get('/nextPartyId');
 
+      this.party.id = idResponse.data;
+      console.log(this.party.id);
       for (const city of response.data) {
         console.log(city)
         this.cities.push(city)
