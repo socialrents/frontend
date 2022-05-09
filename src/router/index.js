@@ -6,6 +6,7 @@ const routes = [
     { path: "/signupOwner", component: () => import('../components/views/pages/owner/SignupOwner.vue')},
     { path: "/signupClient", component: () => import('../components/views/pages/client/SignupClient.vue')},
     { path: "/ownerPage", component: () => import('../components/views/pages/owner/OwnerPage.vue')},
+    { path: "/notifications", component: () => import('../components/views/pages/owner/NotificationsPage.vue')},
     { path: "/houses", component: () => import('../components/views/pages/owner/HousesPage.vue')},
     { path: "/newHouse", component: () => import('../components/views/pages/owner/forms/NewHouseForm.vue')},
     { path: "/clientPage", component: () => import('../components/views/pages/client/ClientPage.vue')},

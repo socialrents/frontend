@@ -8,9 +8,9 @@
     <div class="location">
 		<img class="houseImg" src="../../../../assets/house.jpg">
 		<div class='address'>
-		Cidade: {{ party.city }} <br>
-		Bairro {{ party.district }} <br>
-		Valor total: {{party.total }} <br>
+			Cidade: {{ party.city }} <br>
+			Bairro: {{ party.district }} <br>
+			Valor total: {{party.total }} <br>
 		</div>
     </div>
     <div class="description">

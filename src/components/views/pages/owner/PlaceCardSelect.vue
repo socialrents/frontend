@@ -40,6 +40,7 @@ export default {
   },
   methods: {
     async selectPlace(id) {
+        console.log(this.place)
         this.$swal.fire({
         title: 'Confirmar seleção de imóvel?',
         icon: 'warning',
@@ -50,20 +51,35 @@ export default {
         confirmButtonText: 'Sim'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          console.log(this.place);
 
+          console.log(this.place);
+          
+          const responseParty = await Api.get('/lastPartyId');
+          var partyId = responseParty.data
+
+          partyId = {...partyId}.partyId;
+          
           const reservation = {
-            id_party: 49,
+            id_party: partyId,
             id_house: id,
             total: this.total
           }
           console.log(reservation);
           const response = await Api.post('/createReservation', reservation);
           if (response.status === 200) {
+            const notification = {
+              id_house: this.place.id,
+              id_party: partyId,
+              id_owner: this.place.id_owner
+            }
+            // Criar notificação no BD
+            console.log(notification);
+
 						this.$swal.fire({
-							title: 'solicitação com sucesso!',
+							title: 'solicitação enviada com sucesso!',
 							icon: 'success'
 						})
+            this.$router.push('/clientPage');
 					} else {
 						this.$swal.fire({
 							title: 'Erro ao enviar solicitação!',

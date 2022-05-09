@@ -48,8 +48,8 @@
             </div>
           </div>
           <div class="buttons">
-            <MainButton id="addPartyBtn" :msg="'Cadatrar evento'" v-on:click='createParty'/>
-            <MainButton id="houseBtn" :msg="'Escolher imóvel'" v-on:click='showPlaces' />
+            <MainButton id="addPartyBtn" :msg="'Escolher imóvel'" v-on:click='createParty'/>
+            <!-- <MainButton id="houseBtn" :msg="'Escolher imóvel'" v-on:click='showPlaces' /> -->
           </div>
         </div> 
       </div>
@@ -71,7 +71,6 @@ export default {
   data() {
 		return {
 			party: {
-        id: null,
 				startDate: "",
 				endDate: "",
 				nOfDays: 0,
@@ -87,16 +86,12 @@ export default {
 		}
   },
   async mounted() {
-      // configurar cidades do bd
-      const response = await Api.get('/allCities');
-      const idResponse = await Api.get('/nextPartyId');
+    const response = await Api.get('/allCities');
 
-      this.party.id = idResponse.data;
-      console.log(this.party.id);
-      for (const city of response.data) {
-        console.log(city)
-        this.cities.push(city)
-      }
+    for (const city of response.data) {
+      console.log(city)
+      this.cities.push(city)
+    }
   },
   methods: {
     selectCity(payload) {
@@ -110,12 +105,12 @@ export default {
             this.$notify({ type: 'warn', text: 'Preencha os campos!' })
       } else {     
         
+        this.party.startDate = moment(this.party.startDate);
+        this.party.endDate = moment(this.party.endDate);
+
         if (this.party.startDate > this.party.endDate) {
           this.$notify({ type: 'warn', text: 'Digite uma data válida!' })
         } else {
-          
-          this.party.startDate = moment(this.party.startDate);
-          this.party.endDate = moment(this.party.endDate);
 
           this.party.nOfDays = moment.duration(this.party.endDate.diff(this.party.startDate)).asDays();
 
@@ -133,17 +128,7 @@ export default {
             if (result.isConfirmed) {
               const response = await Api.post('/newParty', this.party)
               console.log(response)
-              if (response.status === 200) {
-                this.$swal.fire({
-                  title: 'Solicitação enviada com sucesso!',
-                  icon: 'success'
-                })
-              } else {
-                this.$swal.fire({
-                  title: 'Erro ao enviar solicitação!',
-                  icon: 'error'
-                })
-              }
+              this.showPlaces();
             }
           })
         }
@@ -221,10 +206,10 @@ export default {
   flex-direction: row-reverse;
 }
 
-#houseBtn {
+/* #houseBtn {
   background: #FBA31F;
   margin-right: 20px;
-}
+} */
 #addPartyBtn {
   background: #24A7F1;
 }
