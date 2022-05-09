@@ -63,6 +63,7 @@ import dropdown from 'vue-dropdowns'
 import ClientNavBar from '../ClientNavBar.vue';
 import MainButton from '../../../../buttons/MainButton.vue'
 import Api from '../../../../../services/api.js'
+import moment from 'moment'
 
 export default {
   name: 'NewPartyForm',
@@ -72,7 +73,7 @@ export default {
 			party: {
 				startDate: "",
 				endDate: "",
-				nOfDays: 3,
+				nOfDays: 0,
 				nOfPeople: 0,
         city: "",
 				description: "",
@@ -99,37 +100,60 @@ export default {
       console.log({...payload})
     },
     async createParty() {
-      console.log(this.party);
-      this.$swal.fire({
-        title: 'Confirmar agendamento de evento?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				cancelButtonText: 'Não',
-				confirmButtonText: 'Sim'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const response = await Api.post('/newParty', this.party)
-          console.log(response)
-          if (response.status === 200) {
-						this.$swal.fire({
-							title: 'Solicitação enviada com sucesso!',
-							icon: 'success'
-						})
-					} else {
-						this.$swal.fire({
-							title: 'Erro ao enviar solicitação!',
-							icon: 'error'
-						})
-					}
+
+      if (this.party.startDate === "" || this.party.endDate === "" ||
+          this.party.nOfPeople === 0 || this.party.description === "") {
+            this.$notify({ type: 'warn', text: 'Preencha os campos!' })
+      } else {     
+        
+        if (this.party.startDate > this.party.endDate) {
+          this.$notify({ type: 'warn', text: 'Digite uma data válida!' })
+        } else {
+          
+          this.party.startDate = moment(this.party.startDate);
+          this.party.endDate = moment(this.party.endDate);
+
+          this.party.nOfDays = moment.duration(this.party.endDate.diff(this.party.startDate)).asDays();
+
+          this.party.city = this.citySelected.name.name ;
+
+          this.$swal.fire({
+            title: 'Confirmar agendamento de evento?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim'
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              const response = await Api.post('/newParty', this.party)
+              console.log(response)
+              if (response.status === 200) {
+                this.$swal.fire({
+                  title: 'Solicitação enviada com sucesso!',
+                  icon: 'success'
+                })
+              } else {
+                this.$swal.fire({
+                  title: 'Erro ao enviar solicitação!',
+                  icon: 'error'
+                })
+              }
+            }
+          })
         }
-      })
+      }
     },
     showPlaces() {
-      const city = { ...this.citySelected.name }
-      console.log(city)
-      this.$router.push(`/allPlaces/${city.name}`);
+      const city = { ...this.citySelected.name };
+
+      this.party.startDate = moment(this.party.startDate);
+      this.party.endDate = moment(this.party.endDate);
+
+      this.party.nOfDays = moment.duration(this.party.endDate.diff(this.party.startDate)).asDays();
+      
+      this.$router.push(`/allPlaces/${city.name}/${this.party.nOfDays}`);
     }
   }
 }

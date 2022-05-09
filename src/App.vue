@@ -29,6 +29,6 @@ export default {
   color: #2c3e50;
 }
 .my-notification {
-  margin-top: 80px;
+  margin-top: 120px;
 }
 </style>

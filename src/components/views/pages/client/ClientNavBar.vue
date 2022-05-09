@@ -30,7 +30,7 @@ export default {
       this.$router.go(-1);
     },
     homePage() {
-      this.$router.push('/ownerPage');
+      this.$router.push('/clientPage');
     }
   }
 }

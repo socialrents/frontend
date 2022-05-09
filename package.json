@@ -13,6 +13,7 @@
     "blueimp-md5": "^2.19.0",
     "core-js": "^3.8.3",
     "feather-icons": "^4.29.0",
+    "moment": "^2.29.3",
     "store": "^2.0.12",
     "vue": "^3.2.13",
     "vue-dropdowns": "^1.1.2",
