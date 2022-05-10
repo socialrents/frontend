@@ -10,7 +10,7 @@
             Bairro: {{ place.district }} <br>
             Valor da diária: {{ place.price }} <br>
             Metros quadrados: {{ place.sqrmeters }} <br>
-            Proprietário: {{ place.owner }} <br>
+            Proprietário: {{ place.owner }} {{place.id_owner}} <br>
             </div>
         </div>
         <div class="description">
@@ -74,6 +74,9 @@ export default {
             }
             // Criar notificação no BD
             console.log(notification);
+            const responseNotif = await Api.post('/newNotification', notification);
+
+            console.log(responseNotif.status);
 
 						this.$swal.fire({
 							title: 'solicitação enviada com sucesso!',

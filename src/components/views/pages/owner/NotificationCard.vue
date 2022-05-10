@@ -7,7 +7,7 @@
             <!-- <div class='houseImg' /> -->
             <div class='address'>
 						<h3>Informações sobre o evento</h3> <br>
-            Código do imóvel: {{ notification.place }} <br>
+            Código do imóvel: {{ notification.id_house }} <br>
             Cliente: {{ notification.client }} <br>
             Data de início: {{ notification.startdate }} <br>
 						Data de término: {{ notification.enddate }} <br>
@@ -18,8 +18,8 @@
         Descrição do evento: {{ notification.description }}
         </div> 
         <div class="buttons">
-          <MainButton class="accept" :msg="'Aceitar'" />
-          <MainButton class="deny" :msg="'Recusar'" />
+          <MainButton class="accept" :msg="'Aceitar'" v-on:click="accept(notification.id_party)"/>
+          <MainButton class="deny" :msg="'Recusar'" v-on:click="deny(notification.id_party)" />
         </div>
     </div>
 </template>
@@ -36,6 +36,16 @@ export default {
     notification: Object
   },
   methods: {
+		async accept(id_party) {
+			// alert(id_party);
+			const response = await Api.put(`/acceptParty/${id_party}`)
+			console.log(response.data);
+		},
+		async deny(id_party) {
+			// alert(id_party);
+			const response = await Api.put(`/denyParty/${id_party}`)
+			console.log(response.data);
+		},
     async deleteNotification(id) {
 			
 			this.$swal.fire({

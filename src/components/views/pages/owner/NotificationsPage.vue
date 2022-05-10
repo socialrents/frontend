@@ -3,9 +3,6 @@
     <div id="nav-bar">
       <OwnerNavBar />
     </div>
-    <div class="header">
-      <UserCard :user="this.$store.state.user"/>
-    </div>
      <div class="main-page">
       <div v-if="this.notifications.length == 0">
         <h2 class="noNotifTitle" >Nenhuma notificação no momento!</h2>
@@ -36,7 +33,6 @@ export default {
   },
   async mounted() {
     const user = JSON.parse(localStorage.getItem("socialrents-user"))
-
     const response = await Api.get(`/notifications/${user.id}`);
     this.notifications = response.data;
     console.log(response.data)
