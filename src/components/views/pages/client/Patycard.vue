@@ -10,6 +10,8 @@
 		<div class='address'>
 			Cidade: {{ party.city }} <br>
 			Bairro: {{ party.district }} <br>
+			Data de início: {{ party.startdate }} <br>
+			Data de finalização: {{ party.enddate }} <br>
 			Valor total: {{party.total }} <br>
 		</div>
     </div>

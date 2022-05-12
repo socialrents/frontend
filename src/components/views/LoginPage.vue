@@ -14,9 +14,9 @@
               <MainButton class="login-btn" msg="Entrar" v-on:click="login"/>
               <RouterLink to="/"><MainButton class="signup-btn" msg="Cadatre-se"/> </RouterLink>
             </div>
-            <div class="google-container">
+            <!-- <div class="google-container">
               <MainButton class="google-button" msg="Entre com o Gmail" />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

@@ -110,6 +110,8 @@ export default {
 
         if (this.party.startDate > this.party.endDate) {
           this.$notify({ type: 'warn', text: 'Digite uma data válida!' })
+        } else if (this.party.startDate < moment.now()){
+          this.$notify({ type: 'warn', text: 'Data de início não pode ser menor que a data atual!' });
         } else {
 
           this.party.nOfDays = moment.duration(this.party.endDate.diff(this.party.startDate)).asDays();

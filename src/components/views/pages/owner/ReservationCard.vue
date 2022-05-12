@@ -1,42 +1,40 @@
 <template>
-    <div class="notification-card">
-        <!-- <div class='cardButtons'>
-          <vue-feather class='remover' vue-feather type="x" v-on:click="deleteNotification(notification.id)" />
-        </div> -->
+    <div class="reservation-card">
+        <div class='cardButtons'>
+          <vue-feather class='remover' vue-feather type="x" />
+        </div>
         <div class="location">
             <!-- <div class='houseImg' /> -->
             <div class='address'>
 						<h3>Informações sobre o evento</h3> <br>
-            Código do imóvel: {{ notification.id_house }} <br>
-            Cliente: {{ notification.client }} <br>
-            Data de início: {{ notification.startdate }} <br>
-						Data de término: {{ notification.enddate }} <br>
-            Qtd. de pessoas: {{notification.nofpeople }} <br>
+            Código do imóvel: {{ reservation.id_house }} <br>
+            Cliente: {{ reservation.client }} <br>
+            Data de início: {{ reservation.startdate }} <br>
+						Data de término: {{ reservation.enddate }} <br>
+            Qtd. de pessoas: {{reservation.nofpeople }} <br>
             </div>
         </div>
         <div class="description">
-        Descrição do evento: {{ notification.description }}
+        Descrição do evento: {{ reservation.description }}
         </div> 
-        <div class="buttons">
-          <MainButton class="accept" :msg="'Aceitar'" v-on:click="accept(notification.id_notif)"/>
-          <MainButton class="deny" :msg="'Recusar'" v-on:click="deny(notification.id_party)" />
-        </div>
+        <div class="total">
+          <div class="totalPrice">Lucro total: {{ reservation.total }}</div>
+        </div> 
     </div>
 </template>
 
 <script>
 
 import Api from '../../../../services/api';
-import MainButton from '../../../buttons/MainButton.vue';
 
 export default {
-  name: 'notificationCard',
-  components: { MainButton },
+  name: 'ReservationCard',
   props: {
-    notification: Object
+    reservation: Object
   },
   methods: {
-		async accept() {
+		async accept(id) {
+			alert(id);
 			this.$swal.fire({
 				title: 'Confirmar autorização de evento?',
 				icon: 'warning',
@@ -47,7 +45,7 @@ export default {
 				confirmButtonText: 'Sim'
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					const response = await Api.put(`/acceptParty/${this.notification.id_notif}/${this.notification.id_house}/${this.notification.id_party}`);
+					const response = await Api.put(`/acceptParty/${this.reservation.id_notif}/${this.reservation.id_house}/${this.reservation.id_party}`);
 					if (response.status === 200) {
 						this.$swal.fire({
 							title: 'Evento confirmado!',
@@ -68,7 +66,7 @@ export default {
 				confirmButtonText: 'Sim'
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					const response = await Api.put(`/denyParty/${this.notification.id_notif}/${this.notification.id_party}`);
+					const response = await Api.put(`/denyParty/${this.reservation.id_notif}/${this.reservation.id_party}`);
 					if (response.status === 200) {
 						this.$swal.fire({
 							title: 'Evento cancelado!',
@@ -78,8 +76,7 @@ export default {
 				}
 			})
 		},
-    async deleteNotification(id) {
-			
+    async deletereservation(id) {
 			this.$swal.fire({
         title: 'Confirmar exclusão de imóvel?',
         icon: 'warning',
@@ -90,7 +87,7 @@ export default {
 				confirmButtonText: 'Sim'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await Api.delete(`/deletenotification/${id}`)
+          const response = await Api.delete(`/deletereservation/${id}`)
           console.log(response)
           if (response.status === 200) {
 						this.$swal.fire({
@@ -110,7 +107,21 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-  .notification-card {
+.total {
+  margin-top: 70px;
+  margin-left: 60%;
+  color: white;
+}
+.totalPrice {
+  background: #ffb004;
+  width: 250px;
+	height: 20px;
+	border-radius: 3px;
+	border: 0 none;
+	color: #ffff;
+  text-align: center;
+}
+.reservation-card {
   width: 600px;
   height: 250px;
   background: #f3f3f3;
@@ -118,7 +129,7 @@ export default {
   padding: 50px;
 }
 
-.notification-card .houseImg {
+.reservation-card .houseImg {
   border: 1px dashed red;
   width: 150px;
   height: 80px;
@@ -153,7 +164,7 @@ export default {
 .accept:hover {
 	background: #0ba324;
 }
-.notification-card .cardButtons {
+.reservation-card .cardButtons {
 	margin-left: 100%;
 	width: 100px;
 	margin-top: -30px;
@@ -161,21 +172,21 @@ export default {
 	display: flex;
 }
 
-.notification-card .cardButtons .editar {
+.reservation-card .cardButtons .editar {
 	background: #24A7F1;
 	border-radius: 3px 0px 0px 3px;
 	height: 15px;
 	color: white;
 	padding: 3px;
 }
-.notification-card .cardButtons .remover {
+.reservation-card .cardButtons .remover {
 	background: #E94747;
 	border-radius: 3px;
 	height: 15px;
 	color: white;
 	padding: 3px;
 }
-.notification-card .location {
+.reservation-card .location {
 	display: flex;
 }
 

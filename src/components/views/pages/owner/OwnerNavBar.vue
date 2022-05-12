@@ -2,14 +2,15 @@
   <div id="nav">
     <div class="logo" v-on:click="homePage">SocialRents</div>
     <div class="icons">
-      <div class="profile">
+      <!-- <div class="profile">
         <vue-feather type="user" />
-      </div>
+      </div> -->
       <div class="previous">
         <vue-feather type="corner-up-left" v-on:click="previousPage" />
       </div>
       <div class="notifications">
-        <vue-feather type="bell" v-on:click="bellClick" />
+        <!-- <vue-feather type="bell" v-on:click="bellClick" /> -->
+        <NotificationButton />
       </div>
       <div class="houses">
         <vue-feather type="home" v-on:click="houseClick" />
@@ -22,8 +23,11 @@
 </template>
 
 <script>
+import NotificationButton from '../../../buttons/NotificationButton.vue';
+
 export default {
   name: 'OwnerNavBar',
+  components: { NotificationButton },
   methods: {
     logout() {
       const store = this.$store;
@@ -46,7 +50,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 
 #nav {
   width: 100%;

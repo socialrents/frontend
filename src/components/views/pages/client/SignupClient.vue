@@ -52,6 +52,7 @@ export default {
         Api.post('/signupClient', this.userCreated).then((response) => {
           console.log(response.status);
           this.$notify({ type: "success", text: "Usuário cadastrado com sucesso!"})
+          this.$router.push('/login');
         }).catch((error) => {
           console.log(error);
           this.$notify({ type: 'error', text: 'Usuário já existe!' })

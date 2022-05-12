@@ -5,8 +5,9 @@
           <vue-feather class='remover' vue-feather type="trash-2" v-on:click="deletePlace(place.id)" />
         </div>
         <div class="location">
-            <div class='houseImg' />
             <div class='address'>
+            <h3>Dados do local</h3> <br>
+            Código: {{ place.id }} <br>
             Cidade: {{ place.city }} <br>
             Bairro {{ place.district }} <br>
             Valor da diária: {{place.price }} <br>
@@ -65,16 +66,10 @@ export default {
 <style lang="css">
   .place-card {
   width: 600px;
-  height:200px;
+  height:250px;
   background: #f3f3f3;
   margin: 10px;
   padding: 50px;
-}
-
-.place-card .houseImg {
-  border: 1px dashed red;
-  width: 150px;
-  height: 80px;
 }
 .status {
   margin-top: 60px;
@@ -124,9 +119,7 @@ export default {
 .place-card .location {
 	display: flex;
 }
-.place-card .location .address {
-	margin-left: 30px;
-}
+
 .description {
   width: 400px;
   margin-top: 50px;

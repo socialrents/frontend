@@ -62,7 +62,9 @@ export default {
           const reservation = {
             id_party: partyId,
             id_house: id,
-            total: this.total
+            id_owner: this.place.id_owner,
+            login_client:  JSON.parse(localStorage.getItem("socialrents-user")).login,
+            total: this.total,
           }
           console.log(reservation);
           const response = await Api.post('/createReservation', reservation);

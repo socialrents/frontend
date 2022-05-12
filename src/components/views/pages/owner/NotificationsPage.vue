@@ -28,7 +28,7 @@ export default {
   components: { OwnerNavBar, NotificationCard },
   data() {
     return {
-      notifications: [1, 2]
+      notifications: []
     }
   },
   async mounted() {
