@@ -3,14 +3,21 @@
     <img id="user-img" src="../assets/user.jpg" alt="">
     <div class="line"></div>
     <h4 id="user-name">{{ user.login }}</h4>
+    <vue-feather class='editProfile' vue-feather type="edit" v-on:click="editProfile()"/>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'UserCard',
   props: {
     user: Object
+  },
+  methods: {
+    async editProfile() {
+      this.$router.push("editUser");
+    }
   }
 }
 </script>
@@ -28,6 +35,11 @@ export default {
   margin-left: 15px;
   width: 60px;
   height: 60px;
+}
+.editProfile {
+  margin-left: 60px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .line {
 	height: 40px;

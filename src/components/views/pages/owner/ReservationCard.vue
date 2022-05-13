@@ -9,8 +9,8 @@
 						<h3>Informações sobre o evento</h3> <br>
             Código do imóvel: {{ reservation.id_house }} <br>
             Cliente: {{ reservation.client }} <br>
-            Data de início: {{ reservation.startdate }} <br>
-						Data de término: {{ reservation.enddate }} <br>
+            Data de início: {{ startdate }} <br>
+						Data de término: {{ enddate }} <br>
             Qtd. de pessoas: {{reservation.nofpeople }} <br>
             </div>
         </div>
@@ -26,12 +26,19 @@
 <script>
 
 import Api from '../../../../services/api';
+import moment from 'moment';
 
 export default {
   name: 'ReservationCard',
   props: {
     reservation: Object
   },
+	data() {
+		return {
+			startdate: moment(this.reservation.startdate).format("DD/MM/YYYY"),
+			enddate: moment(this.reservation.enddate).format("DD/MM/YYYY"),
+		}
+	},
   methods: {
 		async accept(id) {
 			alert(id);

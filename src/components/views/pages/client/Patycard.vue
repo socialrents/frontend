@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="party-card">
 	<div class='cardButtons'>	
-			<vue-feather class='editar' vue-feather type="edit-3" />
-	
+			<vue-feather class='editar' vue-feather type="edit-3" v-on:click="editParty()"/>
 			<vue-feather class='remover' vue-feather type="trash-2" v-on:click="deleteParty(party.id)" />
 	</div>
     <div class="location">
@@ -10,8 +9,8 @@
 		<div class='address'>
 			Cidade: {{ party.city }} <br>
 			Bairro: {{ party.district }} <br>
-			Data de início: {{ party.startdate }} <br>
-			Data de finalização: {{ party.enddate }} <br>
+			Data de início: {{ startdate }} <br>
+			Data de finalização: {{ enddate }} <br>
 			Valor total: {{party.total }} <br>
 		</div>
     </div>
@@ -29,13 +28,24 @@
 <script>
 
 import Api from '../../../../services/api';
+import moment from 'moment';
 
 export default {
   name: 'PartyCard',
   props: {
     party: Object
   },
+	data() {
+		return {
+			startdate: moment(this.party.startdate).format("DD/MM/YYYY"),
+			enddate: moment(this.party.enddate).format("DD/MM/YYYY"),
+			showEditModal: false
+		}
+	},
   methods: {
+		async editParty() {
+			this.ShowEditModal = false;
+		},
 		async deleteParty(id) {
 			this.$swal.fire({
         title: 'Confirmar cancelamento de evento?',
@@ -117,6 +127,7 @@ export default {
 	margin-top: -30px;
 	height: 20px;
 	display: flex;
+	cursor: pointer;
 }
 .party-card .cardButtons .editar {
 	background: #24A7F1;

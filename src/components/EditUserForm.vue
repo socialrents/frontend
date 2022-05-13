@@ -1,0 +1,167 @@
+<template>
+  <div>
+    <div class="pageCenter">
+        <div class="userForm">
+					<div class="inputs">
+						<div class="others">
+              <div class="inputContainer">
+								<h2 class="title">Editar perfil</h2>
+                <label>Email</label>
+                <br>
+								<input 
+									type="text" 
+									name="email" 
+									class="emailInput" 
+									v-model="user.email"
+								/>
+              </div>
+							<div class="inputContainer">
+                <label>Nome de usuário</label>
+                <br>
+								<input 
+									type="text" 
+									name="name" 
+									class="loginInput" 
+									v-model="user.login"
+								/>
+              </div>
+							<!-- <div class="passwordChange">
+								<div class="inputContainer">
+									<label>Nova senha</label>
+									<br>
+									<input 
+										type="password" 
+										name="password" 
+										class="passInput" 
+									/>
+								</div>
+								<div class="inputContainer">
+									<label>Repita a nova senha</label>
+									<br>
+									<input 
+										type="password" 
+										name="passwordCheck" 
+										class="loginInput" 
+									/>
+								</div>
+							</div> -->
+						<div class="buttons">
+							<MainButton id="updatePass" :msg="'Alterar Senha'" v-on:click="updatePass" />
+							<MainButton id="saveChanges" :msg="'Salvar Alterações'" v-on:click="saveChanges" />
+						</div>
+            </div>
+          </div>
+        </div> 
+    </div>
+  </div>
+</template>
+
+<script>
+
+import MainButton from '../components/buttons/MainButton.vue';
+import Api from '../services/api';
+
+export default {
+  name: 'HousesPage',
+  components: { MainButton },
+	data() {
+		return {
+			user: JSON.parse(localStorage.getItem("socialrents-user"))
+		}
+	},
+	methods: {
+		async updatePass() {
+			alert('oi');
+		},
+		async saveChanges() {
+			this.$swal.fire({
+				title: 'Confirmar alteração de perfil?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Não',
+				confirmButtonText: 'Sim'
+			}).then(async (result) => {
+				if (result.isConfirmed) {
+					const response = await Api.put('/editProfile', this.user);
+					if (response.status === 200) {
+						this.$swal.fire({
+							title: 'Perfil alterado com sucesso!',
+							icon: 'success'
+						})
+					} else {
+						this.$swal.fire({
+							title: 'Erro ao alterar perfil!',
+							icon: 'error'
+						})
+					}
+				}
+			})
+		}
+	}
+}
+
+</script>
+
+<style scoped>
+
+.pageCenter {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.userForm {
+  margin-top: 20px;
+	width: 500px;
+}
+
+.title {
+  color: #585858;
+	margin-bottom: 40px;
+}
+
+.others {
+	width: 400px;
+}
+
+.inputs {
+  margin-top: 30px;
+  display: flex;
+	justify-content: space-around;
+}
+input {
+  padding: 5px;
+  border: 2px solid #838383;
+  border-radius: 3px;
+  background: #f3f3f3;
+	height: 25px;
+	width: 100%;
+  height: 25px;
+	margin-top: 15px;
+}
+.inputContainer {
+	margin: 15px;
+}
+input:focus {
+  outline: 0;
+}
+
+.buttons {
+  margin-top: 25px;
+  display: flex;
+	justify-content: flex-end;
+}
+.passwordChange {
+	display: flex;
+}
+#saveChanges {
+  background: #4661ED;
+}
+#updatePass {
+	background: #dfa70f;
+	margin-right: 15px;
+}
+</style>

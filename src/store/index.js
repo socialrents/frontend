@@ -29,14 +29,16 @@ const store = createStore({
             try {
                 const user = await JSON.parse(localStorage.getItem('socialrents-user'));
                 const response = await Api.post('/login', {
+                    email: user.email,
                     login: user.login,
-                    password: user.password
+                    password: user.password,
                 })
                 if (response.status === 200) {
                     const { user } = response.data;
                     console.log(user);
                     commit('setUser', {
                         id: user.id,
+                        email: user.email,
                         login: user.login,
                         password: user.password,
                         type: user.type

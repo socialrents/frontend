@@ -9,8 +9,8 @@
 						<h3>Informações sobre o evento</h3> <br>
             Código do imóvel: {{ notification.id_house }} <br>
             Cliente: {{ notification.client }} <br>
-            Data de início: {{ notification.startdate }} <br>
-						Data de término: {{ notification.enddate }} <br>
+            Data de início: {{ startdate }} <br>
+						Data de término: {{ enddate }} <br>
             Qtd. de pessoas: {{notification.nofpeople }} <br>
             </div>
         </div>
@@ -28,6 +28,7 @@
 
 import Api from '../../../../services/api';
 import MainButton from '../../../buttons/MainButton.vue';
+import moment from 'moment';
 
 export default {
   name: 'notificationCard',
@@ -35,6 +36,12 @@ export default {
   props: {
     notification: Object
   },
+	data() {
+		return {
+			startdate: moment(this.notification.startdate).format("DD/MM/YYYY"),
+			enddate: moment(this.reservation.enddate).format("DD/MM/YYYY"),
+		}
+	},
   methods: {
 		async accept() {
 			this.$swal.fire({

@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 const routes = [
     { path: "/", component: () => import('../components/views/HomePage.vue')},
+    { path: "/editUser", component: () => import('../components/EditUserForm.vue')},
     { path: "/login", component: () => import('../components/views/LoginPage.vue')},
     { path: "/signupOwner", component: () => import('../components/views/pages/owner/SignupOwner.vue')},
     { path: "/signupClient", component: () => import('../components/views/pages/client/SignupClient.vue')},

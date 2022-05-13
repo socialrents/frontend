@@ -47,7 +47,7 @@
 						/>
           </div>
           <div class="buttons">
-						<MainButton id="addHouseBtn" :msg="'Cadatrar imóvel'" v-on:click="addHouse"/>
+						<MainButton id="addHouseBtn" :msg="'Cadastrar imóvel'" v-on:click="addHouse"/>
 						<div class="sqrmeters">
 							<label>Metros quadrados</label>
               <br>
