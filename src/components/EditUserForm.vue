@@ -12,6 +12,7 @@
 									type="text" 
 									name="email" 
 									class="emailInput" 
+									maxlength="50"
 									v-model="user.email"
 								/>
               </div>
@@ -22,10 +23,12 @@
 									type="text" 
 									name="name" 
 									class="loginInput" 
+									maxlength="15"
 									v-model="user.login"
 								/>
               </div>
-							<!-- <div class="passwordChange">
+							<div v-if="passChange">
+							<div class="passwordChange">
 								<div class="inputContainer">
 									<label>Nova senha</label>
 									<br>
@@ -33,6 +36,8 @@
 										type="password" 
 										name="password" 
 										class="passInput" 
+										v-model="newPass"
+										maxlength="20"
 									/>
 								</div>
 								<div class="inputContainer">
@@ -42,9 +47,12 @@
 										type="password" 
 										name="passwordCheck" 
 										class="loginInput" 
+										v-model="passCheck"
+										maxlength="20"
 									/>
 								</div>
-							</div> -->
+							</div>
+						</div>
 						<div class="buttons">
 							<MainButton id="updatePass" :msg="'Alterar Senha'" v-on:click="updatePass" />
 							<MainButton id="saveChanges" :msg="'Salvar Alterações'" v-on:click="saveChanges" />
@@ -60,18 +68,22 @@
 
 import MainButton from '../components/buttons/MainButton.vue';
 import Api from '../services/api';
+import md5 from 'blueimp-md5'
 
 export default {
   name: 'HousesPage',
   components: { MainButton },
 	data() {
 		return {
-			user: JSON.parse(localStorage.getItem("socialrents-user"))
+			user: JSON.parse(localStorage.getItem("socialrents-user")),
+			passChange: false,
+			newPass: "",
+			passCheck: ""
 		}
 	},
 	methods: {
 		async updatePass() {
-			alert('oi');
+			this.passChange = !this.passChange;
 		},
 		async saveChanges() {
 			this.$swal.fire({
@@ -84,17 +96,46 @@ export default {
 				confirmButtonText: 'Sim'
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					const response = await Api.put('/editProfile', this.user);
-					if (response.status === 200) {
-						this.$swal.fire({
-							title: 'Perfil alterado com sucesso!',
-							icon: 'success'
-						})
+					if (this.passChange) {
+						const userUpdated =  {
+							id: this.user.id,
+							email: this.user.email,
+							login: this.user.login,
+							type: this.user.type,
+							password: md5(this.newPass)
+						}
+						if (this.newPass != this.passCheck) {
+							this.$notify({type: "warn", text: "Senhas devem ser iguais!"});
+						} else {
+							const response = await Api.put('/editProfileAndPass', userUpdated);
+							if (response.status === 200) {
+							this.$swal.fire({
+								title: 'Perfil alterado com sucesso!',
+								icon: 'success'
+							})
+							this.$router.push('/login');
+							} else {
+								this.$swal.fire({
+									title: 'Erro ao alterar perfil!',
+									icon: 'error'
+								})
+							}
+							return;
+						}
 					} else {
-						this.$swal.fire({
-							title: 'Erro ao alterar perfil!',
-							icon: 'error'
-						})
+						const response = await Api.put('/editProfile', this.user);
+						if (response.status === 200) {
+							this.$swal.fire({
+								title: 'Perfil alterado com sucesso!',
+								icon: 'success'
+							})
+							this.$router.push('/login');
+						} else {
+							this.$swal.fire({
+								title: 'Erro ao alterar perfil!',
+								icon: 'error'
+							})
+						}
 					}
 				}
 			})

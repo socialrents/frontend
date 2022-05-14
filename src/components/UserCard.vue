@@ -1,9 +1,11 @@
 <template>
   <div id="card">
-    <img id="user-img" src="../assets/user.jpg" alt="">
-    <div class="line"></div>
-    <h4 id="user-name">{{ user.login }}</h4>
     <vue-feather class='editProfile' vue-feather type="edit" v-on:click="editProfile()"/>
+    <div class="userInfo">
+      <img id="user-img" src="../assets/user.jpg" alt="">
+      <div class="line"></div>
+      <h4 id="user-name">{{ user.login }}</h4>
+    </div>
   </div>
 </template>
 
@@ -27,7 +29,9 @@ export default {
   margin-left: 50px;
   background: #F6F6F6;
   width: 250px;
-  height: 100px;
+  height: 120px;
+}
+.userInfo {
   display: flex;
 }
 #user-img {
@@ -37,8 +41,10 @@ export default {
   height: 60px;
 }
 .editProfile {
-  margin-left: 60px;
+  margin-left: 90%;
   margin-top: 10px;
+  width: 20Px;
+  height: 20px;
   cursor: pointer;
 }
 .line {

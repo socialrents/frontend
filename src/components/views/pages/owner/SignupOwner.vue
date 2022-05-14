@@ -5,13 +5,13 @@
         <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="email" type="email" placeholder="E-mail" v-model="userCreated.email"/>
+            <input class="email" type="email" placeholder="E-mail" maxlength="15" v-model="userCreated.email"/>
             <br>
-            <input class="username" type="text" placeholder="Nome de usuário" v-model="userCreated.login"/>
+            <input class="username" type="text" placeholder="Nome de usuário" maxlength="20" v-model="userCreated.login"/>
             <br>
-            <input class="password" type="password" placeholder="Senha" v-model="userCreated.password"/>
+            <input class="password" type="password" placeholder="Senha" maxlength="20" v-model="userCreated.password"/>
             <br>
-            <input class="password" type="password" placeholder="Repita sua senha" v-model="passwordCheck"/>
+            <input class="password" type="password" placeholder="Repita sua senha" maxlength="20" v-model="passwordCheck"/>
           </div>
             <MainButton class="signup-btn" msg="Cadastre-se como proprietário" v-on:click="signup"/>
             <router-link to="/"> <MainButton class="return-btn" :msg="'Voltar'"/> </router-link>
