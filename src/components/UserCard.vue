@@ -35,7 +35,6 @@ export default {
   display: flex;
 }
 #user-img {
-  margin-top: 15px;
   margin-left: 15px;
   width: 60px;
   height: 60px;
@@ -49,14 +48,13 @@ export default {
 }
 .line {
 	height: 40px;
-	margin-top: 5px;
 	border-left: 2px solid;
 	opacity: 0.2;
 	margin-right: 15px;
   margin-left: 20px;
-  margin-top: 25px;
+  margin-top: 10px;
 }
 #user-name {
-  margin-top: 35px;
+  margin-top: 20px;
 }
 </style>

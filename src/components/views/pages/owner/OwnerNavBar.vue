@@ -31,7 +31,6 @@ export default {
   methods: {
     logout() {
       const store = this.$store;
-      alert("Seção encerrada");
       store.commit("logout");
       this.$router.go("/login");
     },

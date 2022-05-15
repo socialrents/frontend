@@ -141,6 +141,7 @@ export default {
 							title: 'Imóvel cadastrado com sucesso!',
 							icon: 'success'
 						})
+						this.$router.go(-1);
 					} else {
 						this.$swal.fire({
 							title: 'Erro ao cadastrar imóvel!',

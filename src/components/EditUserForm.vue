@@ -5,7 +5,10 @@
 					<div class="inputs">
 						<div class="others">
               <div class="inputContainer">
-								<h2 class="title">Editar perfil</h2>
+								<div class="header">
+									<h2 class="title">Editar perfil</h2>
+									<vue-feather type="corner-up-left" v-on:click="previousPage" />
+								</div>
                 <label>Email</label>
                 <br>
 								<input 
@@ -82,6 +85,9 @@ export default {
 		}
 	},
 	methods: {
+		previousPage() {
+			this.$router.go(-1);
+		},
 		async updatePass() {
 			this.passChange = !this.passChange;
 		},
@@ -151,19 +157,19 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-
 }
 
 .userForm {
-  margin-top: 20px;
+  margin-top: 100px;
 	width: 500px;
 }
 
-.title {
+.header {
   color: #585858;
 	margin-bottom: 40px;
+	display: flex;
+	justify-content: space-between;
 }
-
 .others {
 	width: 400px;
 }

@@ -1,24 +1,34 @@
 <template>
     <div class="place-card">
+        <div v-if="editChange">
         <div class='cardButtons'>	
-          <vue-feather class='editar' vue-feather type="edit-3" />
-          <vue-feather class='remover' vue-feather type="trash-2" v-on:click="deletePlace(place.id)" />
+          <vue-feather class='cancelar' vue-feather type="x" v-on:click="editPlace" />
         </div>
-        <div class="location">
+          <h3>Editar imóvel</h3> <br>
+          <EditPlaceCard :placeEdit="place" />
+        </div>
+        <div v-else>
+          <div class='cardButtons'>	
+            <vue-feather class='editar' vue-feather type="edit-3" v-on:click="editPlace" />
+            <vue-feather class='remover' vue-feather type="trash-2" v-on:click="deletePlace(place.id)" />
+          </div>
+          <div class="location">
             <div class='address'>
-            <h3>Dados do local</h3> <br>
-            Código: {{ place.id }} <br>
-            Cidade: {{ place.city }} <br>
-            Bairro {{ place.district }} <br>
-            Valor da diária: {{place.price }} <br>
-            </div>
+              <h3>Dados do imóvel</h3> <br>
+              Código: {{ place.id }} <br>
+              Cidade: {{ place.city }} <br>
+              Bairro: {{ place.district }} <br>
+              Valor da diária: {{ place.price }} <br>
+              Tamanho: {{ place.sqrmeters }} m² <br>
+              <div class="description">
+              Descrição: {{ place.description }}
+              </div> 
         </div>
-        <div class="description">
-        Descrição: {{ place.description }}
-        </div> 
+        </div>
         <div class="status">
           <div v-if="place.reserved" class="reserved">Reservado</div>
           <div v-else class="available">Disponível</div>
+        </div>
         </div>
     </div>
 </template>
@@ -26,13 +36,23 @@
 <script>
 
 import Api from '../../../../services/api';
+import EditPlaceCard from './EditPlaceCard.vue';
 
 export default {
   name: 'PlaceCard',
+  components: { EditPlaceCard },
   props: {
-    place: Object
+    place: Object,
+  },
+  data() {
+    return {
+      editChange: false
+    }
   },
   methods: {
+    editPlace() {
+      this.editChange = !this.editChange;
+    },
     async deletePlace(id) {
 			this.$swal.fire({
         title: 'Confirmar exclusão de imóvel?',
@@ -75,6 +95,13 @@ export default {
   margin-top: 60px;
   margin-left: 85%;
   color: white;
+}
+.cancelar {
+	background: #E94747;
+	border-radius: 3px;
+	height: 15px;
+	color: white;
+	padding: 3px;
 }
 .reserved {
   background: #E94747;
@@ -122,6 +149,6 @@ export default {
 
 .description {
   width: 400px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 </style>

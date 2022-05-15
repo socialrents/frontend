@@ -62,6 +62,5 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
   /* margin-left: 300px; */
-  margin-top: 20px;
 }
 </style>
