@@ -39,7 +39,7 @@ export default {
 	data() {
 		return {
 			startdate: moment(this.notification.startdate).format("DD/MM/YYYY"),
-			enddate: moment(this.reservation.enddate).format("DD/MM/YYYY"),
+			enddate: moment(this.notification.enddate).format("DD/MM/YYYY"),
 		}
 	},
   methods: {
@@ -54,7 +54,8 @@ export default {
 				confirmButtonText: 'Sim'
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					const response = await Api.put(`/acceptParty/${this.notification.id_notif}/${this.notification.id_house}/${this.notification.id_party}`);
+					console.log({...this.notification});
+					const response = await Api.put(`/acceptParty`, {...this.notification});
 					if (response.status === 200) {
 						this.$swal.fire({
 							title: 'Evento confirmado!',

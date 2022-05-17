@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="party-card">
 	<div class='cardButtons'>	
-			<vue-feather class='editar' vue-feather type="edit-3" v-on:click="editParty()"/>
+			<!-- <vue-feather class='editar' vue-feather type="edit-3" v-on:click="editParty()"/> -->
 			<vue-feather class='remover' vue-feather type="trash-2" v-on:click="deleteParty(party.id)" />
 	</div>
     <div class="location">
@@ -129,16 +129,10 @@ export default {
 	display: flex;
 	cursor: pointer;
 }
-.party-card .cardButtons .editar {
-	background: #24A7F1;
-	border-radius: 3px 0px 0px 3px;
-	height: 15px;
-	color: white;
-	padding: 3px;
-}
+
 .party-card .cardButtons .remover {
 	background: #E94747;
-	border-radius: 0px 3px 3px 0px;
+	border-radius: 3px;
 	height: 15px;
 	color: white;
 	padding: 3px;

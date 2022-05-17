@@ -54,32 +54,36 @@ export default {
       this.editChange = !this.editChange;
     },
     async deletePlace(id) {
-			this.$swal.fire({
-        title: 'Confirmar exclusão de imóvel?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				cancelButtonText: 'Não',
-				confirmButtonText: 'Sim'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const response = await Api.delete(`/deletePlace/${id}`)
-          console.log(response)
-          if (response.status === 200) {
-						this.$swal.fire({
-							title: 'Imóvel deletado com sucesso!',
-							icon: 'success'
-						})
-					} else {
-						this.$swal.fire({
-							title: 'Erro ao deletar imóvel!',
-							icon: 'error'
-						})
-					}
-        }
-      })
-		}
+      if (this.place.reserved) {
+        this.$notify({type: 'warn', text: 'Você não pode deletar um imóvel reservado!'});
+      } else {
+        this.$swal.fire({
+          title: 'Confirmar exclusão de imóvel?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Não',
+          confirmButtonText: 'Sim'
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const response = await Api.delete(`/deletePlace/${id}`)
+            console.log(response)
+            if (response.status === 200) {
+              this.$swal.fire({
+                title: 'Imóvel deletado com sucesso!',
+                icon: 'success'
+              })
+            } else {
+              this.$swal.fire({
+                title: 'Erro ao deletar imóvel!',
+                icon: 'error'
+              })
+            }
+          }
+        })
+      }
+    }
   }
 }
 </script>

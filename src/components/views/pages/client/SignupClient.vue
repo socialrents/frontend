@@ -5,7 +5,7 @@
         <div class="card-title">Cadastre-se na plataforma</div>
         <div class="form-container">
           <div class="input-container">
-            <input class="email" required type="email" placeholder="E-mail" maxlength="15" v-model="userCreated.email"/>
+            <input class="email" required type="email" placeholder="E-mail" maxlength="30" v-model="userCreated.email"/>
             <br>
             <input class="username" required type="text" placeholder="Nome de usuário" maxlength="20" v-model="userCreated.login"/>
             <br>

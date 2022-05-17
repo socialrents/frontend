@@ -17,7 +17,7 @@
         Descrição: {{ place.description }} 
         </div>
         <div class="total">
-          <div class="totalPrice">Total: R$ {{ total }}</div>
+          <div class="totalPrice">Total: {{ total }}</div>
         </div> 
     </div>
 </template>
@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    async selectPlace(id) {
+    async selectPlace() {
         console.log(this.place)
         this.$swal.fire({
         title: 'Confirmar seleção de imóvel?',
@@ -58,27 +58,17 @@ export default {
           var partyId = responseParty.data
 
           partyId = {...partyId}.partyId;
-          
-          const reservation = {
-            id_party: partyId,
-            id_house: id,
-            id_owner: this.place.id_owner,
-            login_client:  JSON.parse(localStorage.getItem("socialrents-user")).login,
-            total: this.total,
-          }
-          console.log(reservation);
-          const response = await Api.post('/createReservation', reservation);
-          if (response.status === 200) {
+
             const notification = {
               id_house: this.place.id,
               id_party: partyId,
-              id_owner: this.place.id_owner
+              id_owner: this.place.id_owner,
+              login_client: JSON.parse(localStorage.getItem("socialrents-user")).login,
+              total: this.total
             }
-            // Criar notificação no BD
             console.log(notification);
             const responseNotif = await Api.post('/newNotification', notification);
-
-            console.log(responseNotif.status);
+            if (responseNotif.status === 200) {
 
 						this.$swal.fire({
 							title: 'solicitação enviada com sucesso!',

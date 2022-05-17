@@ -136,7 +136,7 @@ export default {
 								icon: 'success'
 							})
 							this.$router.push('/login');
-						} else {
+						} else if (response.status === 422) {
 							this.$swal.fire({
 								title: 'Erro ao alterar perfil!',
 								icon: 'error'

@@ -10,6 +10,7 @@
 							name="description" 
 							id="description" 
 							cols="58" rows="3" 
+							maxlength="80"
 							placeholder="Digite aqui uma descrição detalhada contendo as características do imóvel." 
 							v-model="place.description"
 						/>

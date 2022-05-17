@@ -11,7 +11,8 @@
             <textarea 
               name="description" 
               id="description" 
-              cols="58" rows="8" 
+              cols="58" rows="4" 
+              maxlength="50"
               placeholder="Digite aqui uma descrição detalhada do evento" 
               v-model="party.description"
             />
